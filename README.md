@@ -11,7 +11,7 @@ eat throughout the day. Possible features could be like adding different values 
 
 - Application will track the daily calories consumed and calories burned.
 - Any person who wants get fit or want to stay healthy will use this app.
-- I myself try to do regular workout and eat healthy so i wanted to make something like this help which can help me
+- I myself try to do regular workout and eat healthy so i wanted to make something like this help which can help me.
 
 # User Stories
 
