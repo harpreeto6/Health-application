@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TestSample {
+public class TestFood {
     
     @BeforeEach
     void runBefore() {
@@ -13,7 +13,13 @@ public class TestSample {
     }
 
     @Test
-    void sampleTest() {
-        assertTrue(true);
+    void ConstructorTest() {
+        
     }
+
+    @Test
+    void Constructor2Test() {
+        
+    }
+
 }
