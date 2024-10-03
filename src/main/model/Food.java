@@ -14,7 +14,7 @@ public class Food {
 
     // Constructs Food without initializing any field
     public Food() {
-        //stub
+        
     }
 
     //EFFECT: Construct Food and set the fields to given values
@@ -29,31 +29,26 @@ public class Food {
     //EFFECT: returns the value of Calories
     public int getCalories() {
         return this.calories.getValue();
-        //stub
     }
  
     //EFFECT: returns the value of Fat
     public int getFat() {
         return this.fat.getValue();
-        //stub
     }
 
     //EFFECT: returns the value of Carbohydrates
     public int getCarbohydates() {
         return this.carbohydrates.getValue();
-        //stub
     }
 
     //EFFECT: returns the value of protein
     public int getProtein() {
         return this.protein.getValue();
-        //stub
     }
 
     //EFFECT: Return name of the food
     public String getName() {
         return this.name;
-        //stub
     }
     
     //MODIFIES: this
