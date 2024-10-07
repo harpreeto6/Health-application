@@ -7,10 +7,6 @@ public class Fat {
 
     private int value;
 
-    //EFFECT: Construct a Fat attribute without setting any field
-    public Fat() {
-    }
-
     //EFFECT: Constructs a Fat attribute by setting it's field as given value
     public Fat(int value) {
         this.value = value;
@@ -25,7 +21,7 @@ public class Fat {
 
     //EFFECT: return value field 
     public int getValue() {
-        return value;
+        return this.value;
     }
 
 

@@ -12,11 +12,6 @@ public class Food {
     private Fat fat;
     private Carbohydrates carbohydrates;
 
-    // Constructs Food without initializing any field
-    public Food() {
-        
-    }
-
     //EFFECT: Construct Food and set the fields to given values
     public Food(String name,Calories calories, Protein protein,Carbohydrates carbohydrates, Fat fat) {
         this.name = name;

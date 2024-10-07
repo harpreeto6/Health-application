@@ -6,10 +6,6 @@ package model;
 public class Calories {
     private int value;
 
-    //EFFECTS: makes an object of Calories without initializing any field
-    public Calories() {
-    }
-    
     //EFFFECT: makes a Calories aboject with its value set as the value provided
     public Calories(int value) {
         this.value = value;
