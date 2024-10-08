@@ -22,6 +22,7 @@ public class TestDailyTracker {
     private Protein protein, protein2, protein3;
     private Fat fat, fat2, fat3;
     private Carbohydrates carbohydrates, carbohydrates2, carbohydrates3;
+    private int caloriesGoal, proteinGoal;
 
     @BeforeEach
     void runBefore() {
@@ -29,10 +30,13 @@ public class TestDailyTracker {
         protein = new Protein(10);
         calories = new Calories(10);
         carbohydrates = new Carbohydrates(10);
+        caloriesGoal = 2500;
+        proteinGoal = 120;
+        
         fat = new Fat(10);
         date = "1-05-24";
         meal1 = new Food("Salad",calories,protein,carbohydrates,fat );
-        day1 = new DailyTracker(date, meal1);
+        day1 = new DailyTracker(date, meal1, caloriesGoal, proteinGoal);
     }
 
     void addMealNumSecond() {
@@ -57,6 +61,17 @@ public class TestDailyTracker {
     void ConstructorTest() { 
         assertEquals("1-05-24", day1.getDate());
         assertEquals(this.meal1.getName(),day1.getFoodHistory().get(0));
+        assertEquals(proteinGoal, day1.getProteinGoal());
+        assertEquals(caloriesGoal, day1.getCaloriesGoal());
+        assertEquals(protein.getValue(), day1.getProteinConsumed());
+        assertEquals(calories.getValue(), day1.getCaloriesConsumed());
+        assertEquals(carbohydrates.getValue(), day1.getCarbohydratesConsumed());
+        assertEquals(fat.getValue(), day1.getFatConsumed());
+
+        DailyTracker day2 = new DailyTracker(date, proteinGoal, caloriesGoal);
+        assertEquals(date, day2.getDate());
+        assertEquals(proteinGoal, day2.getProteinGoal());
+        assertEquals(caloriesGoal, day2.getCaloriesGoal());
     }
 
     @Test
@@ -144,5 +159,32 @@ public class TestDailyTracker {
         assertTrue(day1.removeItem("Salad"));
         assertFalse(day1.removeItem("Salad"));
         assertEquals(1,day1.getNumFoodItems());
+    }
+
+    @Test
+    void getFoodRecordTest() {
+        List<Food> record = day1.getFoodRecord();
+        
+        assertEquals(protein.getValue(), record.get(0).getProtein());
+        assertEquals(calories.getValue(), record.get(0).getCalories());
+        assertEquals(carbohydrates.getValue(), record.get(0).getCarbohydates());
+        assertEquals(fat.getValue(), record.get(0).getFat());
+        assertEquals("Salad", record.get(0).getName());
+        assertEquals(1, record.size());
+
+        addMealNumSecond();
+        record = day1.getFoodRecord();
+        assertEquals(protein2.getValue(), record.get(1).getProtein());
+        assertEquals(calories2.getValue(), record.get(1).getCalories());
+        assertEquals(carbohydrates2.getValue(), record.get(1).getCarbohydates());
+        assertEquals(fat2.getValue(), record.get(1).getFat());
+        assertEquals("Burger", record.get(1).getName());
+        assertEquals(2, record.size());
+
+        day1.removeItem("Burger");
+        day1.removeItem("Salad");
+        record = day1.getFoodRecord();
+        assertEquals(0, record.size());
+        
     }
 }

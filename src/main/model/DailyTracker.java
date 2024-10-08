@@ -5,15 +5,27 @@ import java.util.List;
 
 public class DailyTracker {
 
+    private  int caloriesGoal;
+    private  int proteinGoal;
+
     private String date;
     private List<Food> foodRecord;
-    private int caloriesConsumed;
-    private int fatConsumed;
-    private int proteinConsumed;
-    private int carbohydratesConsumed;
+    private int caloriesConsumed = 0;
+    private int fatConsumed = 0;
+    private int proteinConsumed = 0;
+    private int carbohydratesConsumed = 0;
+
+    //Requires: caloriesGoal and proteinGoal >= 0
+    //EFFECT: Constructs a DailyTracker by setting up only Date, caloriesGoal and proteinGoal
+    public DailyTracker(String date, int proteinGoal, int caloriesGoal) {
+        foodRecord = new ArrayList<>();
+        this.date = date;
+        this.proteinGoal = proteinGoal;
+        this.caloriesGoal = caloriesGoal;
+    }
 
     //EFFECT: Constructs a  DailyTracker and set up the fields with appropriate values
-    public DailyTracker(String date, Food food) {
+    public DailyTracker(String date, Food food, int caloriesGoal, int proteinGoal) {
         foodRecord = new ArrayList<>();
         this.date = date;
         foodRecord.add(food);
@@ -21,6 +33,8 @@ public class DailyTracker {
         proteinConsumed = food.getProtein();
         fatConsumed = food.getFat();
         caloriesConsumed = food.getCalories();
+        this.caloriesGoal = caloriesGoal;
+        this.proteinGoal = proteinGoal;
         
     }
 
@@ -37,8 +51,7 @@ public class DailyTracker {
     //EFFECT: Returns a List containing names of all the food items been eaten upto the point
     public List<String> getFoodHistory() {
         ArrayList<String> foodHistory = new ArrayList<>();
-
-        for(Food item : foodRecord) {
+        for (Food item : foodRecord) {
             foodHistory.add(item.getName());
         }
         return foodHistory;
@@ -74,12 +87,27 @@ public class DailyTracker {
         return this.foodRecord.size();
     }
 
+    //EFFECT: return the daily calories goal 
+    public int getCaloriesGoal() {
+        return this.caloriesGoal;
+    }
+
+    //EFFECT: return the daily protein goal field
+    public int getProteinGoal() {
+        return this.proteinGoal;
+    }
+
+    //EFFECT: return the foodRecord for today
+    public List<Food> getFoodRecord() {
+        return this.foodRecord;
+    }
+
     //MODIFIES: this
     //EFFECT: remove the food item from the list of items been eaten
     public boolean removeItem(String st) {
         int i = 0;
-        for(Food item : foodRecord) {
-            if(item.getName() == st) {
+        for (Food item : foodRecord) {
+            if (item.getName() == st) {
                 this.caloriesConsumed -= item.getCalories();
                 this.proteinConsumed -= item.getProtein();
                 this.carbohydratesConsumed -= item.getCalories();
