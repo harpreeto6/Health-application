@@ -56,24 +56,28 @@ public class Food {
         this.name = name;
     }
 
+    //REQUIRE: value >= 0
     //MODIFIES: this
     //EFFECT: set calories to given value
     public void setCalories(double value) {
         this.calories.setValue(value);
     }
 
+    //REQUIRE: value >= 0
     //MODIFIES: this
     //EFFECT: set protein to given value
     public void setProtein(double value) {
         this.protein.setValue(value);
     }
 
+    //REQUIRE: value >= 0
     //MODIFIES: this
     //EFFECT: set carbohydrates to given value
     public void setCarbohydrates(double value) {
         this.carbohydrates.setValue(value);    
     }
-
+    
+    //REQUIRE: value >= 0
     //MODIFIES: this
     //EFFECT: set fat to given value
     public void setFat(double value) {

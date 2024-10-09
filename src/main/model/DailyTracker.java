@@ -19,6 +19,7 @@ public class DailyTracker {
     private double fatConsumed = 0;
     private double proteinConsumed = 0;
     private double carbohydratesConsumed = 0;
+    private double caloriesBurned = 0;
 
     //REQUIRES: caloriesGoal and proteinGoal >= 0
     //EFFECT: Constructs a DailyTracker by setting up only Date, caloriesGoal and proteinGoal
@@ -124,6 +125,18 @@ public class DailyTracker {
             i++;
         }
         return false;
+    }
+
+    //REQUIRE: value > 0
+    //MODIFY: this
+    //EFECT: add the value provided to the caloriesBurned field.
+    public void caloriesBurned(double value) {
+        this.caloriesBurned += value;
+    }
+
+    //EFECT: return caloriesBurned field
+    public double getCaloriesBurned() {
+        return this.caloriesBurned;
     }
 
 }

@@ -195,4 +195,11 @@ public class TestDailyTracker {
         assertEquals(0, record.size());
         
     }
+
+    @Test
+    void caloriesBurnedTest() {
+        day1.caloriesBurned(200);
+        day1.caloriesBurned(300);
+        assertEquals(500, day1.getCaloriesBurned(),.01);
+    }
 }

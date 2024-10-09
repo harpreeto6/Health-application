@@ -74,10 +74,10 @@ public class HealthApp {
         date = getFormattedDate();
         System.out.println("\tNow enter your Protein Goal for today in grams : ");
         proteinGoal = getDoubleFromUser();
-        setProteinReminder(proteinGoal);
+        setProteinReminderValue(proteinGoal);
         System.out.println("\tNow enter your Calories Goal for today in cal unit : ");
         caloriesGoal = getDoubleFromUser();
-        setCaloriesReminder(caloriesGoal);
+        setCaloriesReminderValue(caloriesGoal);
         dailyTracker = new DailyTracker(date, proteinGoal,caloriesGoal);
         System.out.println("\tThank you , setup is done !");
         System.out.println("\tDate : " + dailyTracker.getDate() + ", Protein Goal : " + dailyTracker.getProteinGoal() 
@@ -96,6 +96,7 @@ public class HealthApp {
         System.out.println("\tn -> start new day");
         System.out.println("\tt -> check if food is healthy");
         System.out.println("\tc -> to check stats for previous dates");
+        System.out.println("\tb -> to add calories burned");
         System.out.println("\tq -> quit");
     }
 
@@ -121,6 +122,9 @@ public class HealthApp {
                 break;
             case("c"): 
                 checkPrevProgress();
+                break;
+            case("b"): 
+                addCaloriesBurned();
                 break;
             default: 
                 System.out.println("\tSelection not valid...");
@@ -149,6 +153,8 @@ public class HealthApp {
                             + "g of Carbohyddrates");
         System.out.println("\tYou consumed " + dailyTrackerRecord.getRecord().get(currentIndex).getFatConsumed() 
                             + "g of fat");
+        System.out.println("\tYou burned " + dailyTrackerRecord.getRecord().get(currentIndex).getCaloriesBurned() 
+                            + " calories in total");
     }
 
     //EFFECT: provide the list of food items eaten throughout current day with their nutritional Value
@@ -181,12 +187,12 @@ public class HealthApp {
 
     //MODIFY: this
     //EFFECT: set proteinReminder field to proteinGoal * percentReminder
-    private void setProteinReminder(double proteinGoal) {
+    private void setProteinReminderValue(double proteinGoal) {
         proteinReminder = proteinGoal * percentReminder;
     }
 
     //EFFECT: set caloriesReminder field to caloriesGoal * percentReminder
-    private void setCaloriesReminder(double caloriesGoal) {
+    private void setCaloriesReminderValue(double caloriesGoal) {
         caloriesReminder = caloriesGoal * percentReminder;
     }
 
@@ -345,5 +351,13 @@ public class HealthApp {
             showProgress(index);
             return;
         }
+    }
+
+    //MODIFY: this
+    //EFFECT: ask user to input calories burned and add it to tracker 
+    public void addCaloriesBurned() {
+        System.out.println("\tPlease enter the amount of calories burned");
+        double caloriesBurned = getDoubleFromUser();
+        dailyTracker.caloriesBurned(caloriesBurned);
     }
 }
