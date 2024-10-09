@@ -5,7 +5,7 @@
 # TASK 1
 
 - A Health app where user will be able to input whatever food they eat during the day into the app and at the end of the day they will be able to see how much calories they 
-eat throughout the day. Possible features could be like adding different values of macro-nutrients along with food consumed, choose from different activities user did to get the amount of calories they burned throughout the day , or will be able to see if the user is going above their set daily calorie limit.
+eat throughout the day. Possible features could be like adding different values of macro-nutrients along with food consumed, check progress to see how far along user is to meet calories and protein goals, to check previous day records to see how well they are doing in thier eating habits.
 
 # TASK 2
 
