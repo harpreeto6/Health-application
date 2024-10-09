@@ -6,7 +6,7 @@ package model;
  * **/
 public class Carbohydrates {
 
-    private int value;      //representing the value of carbohydrates
+    private double value;      //representing the value of carbohydrates
 
     //EFFECT: creates Carbohydrate object with its value set up as provided value
     public Carbohydrates(int value) {
@@ -21,7 +21,7 @@ public class Carbohydrates {
     }
 
     //EFFECT: return value field 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 }

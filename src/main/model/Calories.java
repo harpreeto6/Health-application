@@ -4,7 +4,7 @@ package model;
  * This class is a representationn of Calories present inside a food item
 */
 public class Calories {
-    private int value;
+    private double value;
 
     //EFFFECT: makes a Calories aboject with its value set as the value provided
     public Calories(int value) {
@@ -19,7 +19,7 @@ public class Calories {
     }
 
     //EFFECT: return value field
-    public int getValue() {
+    public double getValue() {
         return this.value;
     }
 }

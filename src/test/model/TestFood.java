@@ -1,6 +1,7 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,10 +28,10 @@ public class TestFood {
     @Test
     void constructorTest() {
         assertEquals("Salad", meal1.getName());
-        assertEquals(carbohydrates.getValue(), meal1.getCarbohydates());
-        assertEquals(calories.getValue(), meal1.getCalories());
-        assertEquals(protein.getValue(), meal1.getProtein());
-        assertEquals(fat.getValue(), meal1.getFat());
+        assertEquals(carbohydrates, meal1.getCarbohydates());
+        assertEquals(calories, meal1.getCalories());
+        assertEquals(protein, meal1.getProtein());
+        assertEquals(fat, meal1.getFat());
 
     }
 
@@ -41,12 +42,26 @@ public class TestFood {
         meal1.setProtein(20);
         meal1.setName("Burger");
         meal1.setFat(10);
-        assertEquals(1,meal1.getCalories());
-        assertEquals(30,meal1.getCarbohydates());
-        assertEquals(20,meal1.getProtein());
+        assertEquals(calories,meal1.getCalories());
+        assertEquals(carbohydrates,meal1.getCarbohydates());
+        assertEquals(protein,meal1.getProtein());
         assertEquals("Burger",meal1.getName());
-        assertEquals(10,meal1.getFat());
+        assertEquals(fat,meal1.getFat());
 
+    }
+
+    @Test
+    void isHighInProteinTest() {
+        assertFalse(meal1.isHighInProtein());
+        meal1.setProtein(30);
+        assertTrue(meal1.isHighInProtein());
+    }
+
+    @Test 
+    void isHighInCaloriesTest() {
+        assertFalse(meal1.isHighInCalories());
+        meal1.setCalories(550);
+        assertTrue(meal1.isHighInCalories());
     }
 
 }

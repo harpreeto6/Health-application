@@ -1,8 +1,9 @@
 package model;
 
 /** 
- * A food class is a representation of food which will have Calories, Protein,
+ * A food class is a representation of food item which will have Calories, Protein,
  * Fat and Carbohydrates classes as it's attributes
+ * Class will tell  whether a food utem is high in Calories and/or high in Protein
  * **/
 public class Food {
 
@@ -11,6 +12,9 @@ public class Food {
     private Protein protein;
     private Fat fat;
     private Carbohydrates carbohydrates;
+
+    private final int highProtein = 20;
+    private final int highCalories = 500;
 
     //EFFECT: Construct Food and set the fields to given values
     public Food(String name,Calories calories, Protein protein,Carbohydrates carbohydrates, Fat fat) {
@@ -22,23 +26,23 @@ public class Food {
     }
 
     //EFFECT: returns the value of Calories
-    public int getCalories() {
-        return this.calories.getValue();
+    public Calories getCalories() {
+        return this.calories;
     }
  
     //EFFECT: returns the value of Fat
-    public int getFat() {
-        return this.fat.getValue();
+    public Fat getFat() {
+        return this.fat;
     }
 
     //EFFECT: returns the value of Carbohydrates
-    public int getCarbohydates() {
-        return this.carbohydrates.getValue();
+    public Carbohydrates getCarbohydates() {
+        return this.carbohydrates;
     }
 
     //EFFECT: returns the value of protein
-    public int getProtein() {
-        return this.protein.getValue();
+    public Protein getProtein() {
+        return this.protein;
     }
 
     //EFFECT: Return name of the food
@@ -74,5 +78,23 @@ public class Food {
     //EFFECT: set fat to given value
     public void setFat(int value) {
         this.fat.setValue(value);
+    }
+
+    //EFFECT: return true if protein.getValue() >= highProtein
+    public  boolean isHighInProtein() {
+        if (protein.getValue() >= highProtein) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //EFFECT: return true if calories.getValue() >= highCalories
+    public boolean isHighInCalories() {
+        if (calories.getValue() >= highCalories) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

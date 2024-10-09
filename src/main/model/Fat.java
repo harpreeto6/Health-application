@@ -5,7 +5,7 @@ package model;
  * **/
 public class Fat {
 
-    private int value;
+    private double value;
 
     //EFFECT: Constructs a Fat attribute by setting it's field as given value
     public Fat(int value) {
@@ -20,7 +20,7 @@ public class Fat {
     }
 
     //EFFECT: return value field 
-    public int getValue() {
+    public double getValue() {
         return this.value;
     }
 

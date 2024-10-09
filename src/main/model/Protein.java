@@ -2,7 +2,7 @@ package model;
 
 public class Protein {
 
-    private int value;
+    private double value;
 
     //EFFECT: creates Carbohydrate object with its value set up as provided value
     public Protein(int value) {
@@ -17,7 +17,7 @@ public class Protein {
     }
 
     //EFFECT: return value field 
-    public int getValue() {
+    public double getValue() {
         return this.value;
     }
 
