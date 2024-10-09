@@ -3,37 +3,41 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * This class can store various instances of DailyTracker 
+ * and act as a database from which user might be able to get information 
+ * about previous days 
+ */
 public class DailyTrackerRecord {
 
-    private List<DailyTracker> DailytrackerRecord;
+    private List<DailyTracker> dailytrackerRecord;
 
-    //MODIFY: this
     //EFFECT: constructs a new record, initialize the field trackerRecord
     public DailyTrackerRecord() {
-        DailytrackerRecord = new ArrayList<>();
+        dailytrackerRecord = new ArrayList<>();
     }
 
     //MODIFY: this
-    //EFFECT: add a dailyTracker to trackerRecord if there already doesn't 
-    //exist a tracker for the same date in trackRecord
+    //EFFECT: add a dailyTracker to trackerRecord if there doesn't exist a
+    //        dailyTracker for the same date and return true, else return false
     public boolean addDailyTracker(DailyTracker dailyTracker) {
         String date = dailyTracker.getDate();
         boolean exist = false;
-        for (DailyTracker tracker : DailytrackerRecord) {
+        for (DailyTracker tracker : dailytrackerRecord) {
             if (tracker.getDate() == date) {
                 exist = true;
             }
         }
-        if(exist) {
+        if (exist) {
             return false;
         } else {
-            DailytrackerRecord.add(dailyTracker);
+            dailytrackerRecord.add(dailyTracker);
             return true;
         }
     }
 
     //EFFECT: return trackerRecord field
-    public List<DailyTracker> getDailytrackerRecord() {
-        return DailytrackerRecord;
+    public List<DailyTracker> getRecord() {
+        return dailytrackerRecord;
     }
 }

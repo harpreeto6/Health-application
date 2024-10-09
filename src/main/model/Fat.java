@@ -1,21 +1,21 @@
 package model;
 
 /**
- * Class representing the Fat attribute of food
+ * Class representing the fat macro-nutrient present inside food
  * **/
 public class Fat {
 
     private double value;
 
     //EFFECT: Constructs a Fat attribute by setting it's field as given value
-    public Fat(int value) {
+    public Fat(double value) {
         this.value = value;
     }
 
     //REQUIRES: value >= 0
     //MODIFIES: This
     //EFFECT: set value field to given value 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

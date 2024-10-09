@@ -24,12 +24,12 @@ public class TestDailyTrackerRecord {
     @BeforeEach
     void runBefore() {
 
-        caloriesGoal= 2000;
+        caloriesGoal = 2000;
         proteinGoal = 100;
         date = "05-05-05";
         day1 = new DailyTracker(date, proteinGoal, caloriesGoal);
 
-        caloriesGoal2= 2000;
+        caloriesGoal2 = 2000;
         proteinGoal2 = 100;
         date2 = "05-05-06";
         day2 = new DailyTracker(date2, proteinGoal2, caloriesGoal2);
@@ -38,9 +38,8 @@ public class TestDailyTrackerRecord {
     }
 
     @Test
-    void ConstructorTest() {
-        System.out.println(record.getDailytrackerRecord().size());
-        assertEquals(0,record.getDailytrackerRecord().size());
+    void constructorTest() {
+        assertEquals(0,record.getRecord().size());
     }
 
     @Test

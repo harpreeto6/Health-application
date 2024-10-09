@@ -22,7 +22,7 @@ public class TestFood {
         carbohydrates = new Carbohydrates(20);
         fat = new Fat(5);
 
-        meal1 = new Food("Salad",calories,protein,carbohydrates,fat );
+        meal1 = new Food("Salad",calories,protein,carbohydrates,fat);
     }
 
     @Test

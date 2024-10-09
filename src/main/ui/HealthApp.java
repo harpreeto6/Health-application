@@ -1,12 +1,12 @@
 package ui;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import model.Calories;
 import model.Carbohydrates;
 import model.DailyTracker;
+import model.DailyTrackerRecord;
 import model.Fat;
 import model.Food;
 import model.Protein;
@@ -21,7 +21,7 @@ import model.Protein;
  */
 public class HealthApp {
 
-    private List<DailyTracker> dailyRecord;
+    private DailyTrackerRecord dailyTrackerRecord;
     private DailyTracker dailyTracker;
     private Scanner input;
     private int currentIndex = -1;                 
@@ -29,13 +29,13 @@ public class HealthApp {
     private  double proteinReminder;                    
     private int foodItemsEaten = 0;
 
-    private final int itemsReminder = 2;             
+    private final int itemsReminder = 4;             
     private final double percentReminder = .60;      
 
     //MODIFIES: this
     //EFFECT: runs the HealthApp application by initiating necessary fields 
     public HealthApp() {
-        dailyRecord = new ArrayList<>();
+        dailyTrackerRecord = new DailyTrackerRecord();
         userInterface();
     }
 
@@ -52,8 +52,10 @@ public class HealthApp {
             displayMenu();
             userInput = input.next();
             userInput.toLowerCase();
-            if (userInput == "q") {
+            if (userInput.equals("q")) {
+                System.out.println("GoodBye !!");
                 running = false;
+                break;
             } else {
                 processUserInput(userInput);
             }
@@ -64,23 +66,23 @@ public class HealthApp {
     //EFFECT: asking user to input current date and goals
     //        Constructs a new dailyTracker and add it into dailyRecord
     private void dailyTrackerSetup() {
-        int proteinGoal;
-        int caloriesGoal;
+        double proteinGoal;
+        double caloriesGoal;
         String date;
         input = new Scanner(System.in);
-        System.out.println("\tPlease enter Today's date in DD-MM-YY Format: ");
-        date = input.next();
+        System.out.println("\tPlease enter Today's date in DD-MM-YY Format : ");
+        date = getFormattedDate();
         System.out.println("\tNow enter your Protein Goal for today in grams : ");
-        proteinGoal = input.nextInt();
+        proteinGoal = getDoubleFromUser();
         setProteinReminder(proteinGoal);
         System.out.println("\tNow enter your Calories Goal for today in cal unit : ");
-        caloriesGoal = input.nextInt();
+        caloriesGoal = getDoubleFromUser();
         setCaloriesReminder(caloriesGoal);
         dailyTracker = new DailyTracker(date, proteinGoal,caloriesGoal);
         System.out.println("\tThank you , setup is done !");
         System.out.println("\tDate : " + dailyTracker.getDate() + ", Protein Goal : " + dailyTracker.getProteinGoal() 
-                                   + "g, Calories Goal : " + dailyTracker.getCaloriesGoal() + "cal");
-        dailyRecord.add(dailyTracker);
+                                   + "g, Calories Goal : " + dailyTracker.getCaloriesGoal() + " cal");
+        dailyTrackerRecord.addDailyTracker(dailyTracker);
         currentIndex++; 
         foodItemsEaten = 0;
     }
@@ -93,11 +95,13 @@ public class HealthApp {
         System.out.println("\ts -> show progess");
         System.out.println("\tn -> start new day");
         System.out.println("\tt -> check if food is healthy");
+        System.out.println("\tc -> to check stats for previous dates");
         System.out.println("\tq -> quit");
     }
 
     //MODIFY: this
-    //EFFECT: performing different tasks based on what user selected
+    //EFFECT: performing different tasks based on what user selected, 
+    //         actions are based on descriptions from displayMenu() method
     private void processUserInput(String userInput) {
         switch (userInput) {
             case("a"):
@@ -107,13 +111,16 @@ public class HealthApp {
                 foodRecord();
                 break;
             case("s"): 
-                showProgress();               
+                showProgress(currentIndex);               
                 break;
             case("n"): 
                 dailyTrackerSetup();
                 break;
-                case("t"): 
+            case("t"): 
                 decideToAdd(createFood());
+                break;
+            case("c"): 
+                checkPrevProgress();
                 break;
             default: 
                 System.out.println("\tSelection not valid...");
@@ -127,62 +134,64 @@ public class HealthApp {
         addFoodToTracker(food);
     }
 
-    //EFFECT: showing daily progress
-    private void showProgress() {
-        System.out.println("\tYour Progress for today uptil now is : ");
-        System.out.println("\tYou consumed " + dailyRecord.get(currentIndex).getCaloriesConsumed() 
+    //REQUIRE: currentIndex <= this.currentIndex
+    //EFFECT: shows calories and protein goal for today to user and the amount of macro-nutrients user consumed
+    private void showProgress(int currentIndex) {
+        System.out.println("\tYour Progress stats is : ");
+        System.out.println("\tYou consumed " + dailyTrackerRecord.getRecord().get(currentIndex).getCaloriesConsumed() 
                             + " calories, Your Goal is : " 
-                            + dailyRecord.get(currentIndex).getCaloriesGoal() + "calories");
-        System.out.println("\tYou consumed " + dailyRecord.get(currentIndex).getProteinConsumed() 
-                            + "g of protein, Your Goal is : " + dailyRecord.get(currentIndex).getProteinGoal() + "g");
-        System.out.println("\tYou consumed " + dailyRecord.get(currentIndex).getCarbohydratesConsumed() 
+                            + dailyTrackerRecord.getRecord().get(currentIndex).getCaloriesGoal() + " calories");
+        System.out.println("\tYou consumed " + dailyTrackerRecord.getRecord().get(currentIndex).getProteinConsumed() 
+                            + "g of protein, Your Goal is : " 
+                            + dailyTrackerRecord.getRecord().get(currentIndex).getProteinGoal() + "g");
+        System.out.println("\tYou consumed " 
+                            + dailyTrackerRecord.getRecord().get(currentIndex).getCarbohydratesConsumed() 
                             + "g of Carbohyddrates");
-        System.out.println("\tYou consumed " + dailyRecord.get(currentIndex).getFatConsumed() 
+        System.out.println("\tYou consumed " + dailyTrackerRecord.getRecord().get(currentIndex).getFatConsumed() 
                             + "g of fat");
     }
 
-    //EFFECT: provide the list of food items eaten throughout the day with their nutritional Value
+    //EFFECT: provide the list of food items eaten throughout current day with their nutritional Value
     private void foodRecord() {
-        List<Food> record = dailyRecord.get(currentIndex).getFoodRecord();
+        List<Food> record = dailyTrackerRecord.getRecord().get(currentIndex).getFoodRecord();
 
         for (Food item : record) {
-            System.out.println("\tMeal eaten :" + item.getName() + " ,protein : " 
+            System.out.println("\tMeal eaten : " + item.getName() + ", calories : " 
+                                + item.getCalories().getValue() + " cal ,protein : " 
                                 + item.getProtein().getValue() + "g, carbohydrates : " 
                                 + item.getCarbohydates().getValue() + "g, fat : " + item.getFat().getValue() + "g");
         }
     }
 
-    //EFFECT: provide reminders if foodItemsEaten > itemsReminder 
+    //EFFECT: provide reminders if foodItemsEaten >= itemsReminder 
     private void reminders() {
         if (foodItemsEaten >= itemsReminder) { 
-            if (dailyRecord.get(currentIndex).getProteinConsumed() <= proteinReminder) {
+            if (dailyTrackerRecord.getRecord().get(currentIndex).getProteinConsumed() < proteinReminder) {
                 System.out.println("\t YOU ARE BEHIND YOUR PROTEIN GOAL !!");
-            } else if (dailyRecord.get(currentIndex).getProteinConsumed() 
-                        >= dailyRecord.get(currentIndex).getProteinGoal()) { 
+            } else { 
                 System.out.println("\t YOU ARE OVER YOUR PROTEIN GOAL !!");
             }
-            if (dailyRecord.get(currentIndex).getCaloriesConsumed() <= caloriesReminder) {
-                System.out.println("\t YOU ARE BEHIND YOUR CALORIES GOAL");
-            } else if (dailyRecord.get(currentIndex).getCaloriesConsumed() 
-                        >= dailyRecord.get(currentIndex).getCaloriesGoal()) {
-                System.out.println("\t YOU ARE OVER YOUR CALORIES GOAL");
+            if (dailyTrackerRecord.getRecord().get(currentIndex).getCaloriesConsumed() < caloriesReminder) {
+                System.out.println("\t YOU ARE BEHIND YOUR CALORIES GOAL !! ");
+            } else {
+                System.out.println("\t YOU ARE OVER YOUR CALORIES GOAL !! ");
             }
         }
     }
 
+    //MODIFY: this
+    //EFFECT: set proteinReminder field to proteinGoal * percentReminder
+    private void setProteinReminder(double proteinGoal) {
+        proteinReminder = proteinGoal * percentReminder;
+    }
+
+    //EFFECT: set caloriesReminder field to caloriesGoal * percentReminder
+    private void setCaloriesReminder(double caloriesGoal) {
+        caloriesReminder = caloriesGoal * percentReminder;
+    }
 
     //MODIFY: this
-    //EFFECT: set proteinReminder field to 60 % of protein Goal
-    private void setProteinReminder(int proteinGoal) {
-        proteinReminder = .60 * percentReminder;
-    }
-
-    //EFFECT: set caloriesReminder to field
-    private void setCaloriesReminder(int caloriesGoal) {
-        caloriesReminder = .60 * percentReminder;
-    }
-
-    //EFFECT: show user if Food item is high in protein and/or calories and ask if they want to add it
+    //EFFECT: show user if Food item is high in protein and/or calories and ask if they want to add it to tracker
     public void decideToAdd(Food food) {
         if (food.isHighInCalories()) {
             System.out.println("\tThe calorie content in this food is HIGH !!");
@@ -194,8 +203,14 @@ public class HealthApp {
             System.out.println("\tThe protein content in this food is HIGH !!");
         } else {
             System.out.println("\tThe protein content in this food is LOW !!");
-        }
+        }        
+        wantToAdd(food);      
+    }
 
+    //MODIFY: this
+    //EFFECT: ask user if they want to or don't want to add given food into dailyTracker,
+    //        then perform selected operation
+    public void wantToAdd(Food food) {
         String userInput;
         boolean running = true;
         while (running) {
@@ -203,7 +218,7 @@ public class HealthApp {
             System.out.println("\tn -> do not add this meal to tracker ");
             userInput = input.next();
             userInput.toLowerCase();
-            switch(userInput) {
+            switch (userInput) {
                 case("n") :
                     running = false;
                     break;
@@ -212,7 +227,7 @@ public class HealthApp {
                     running = false;
                     break;
                 default :
-                System.out.println("\tInvalid Input !!");
+                    System.out.println("\tInvalid Input !!");
             }
         }
     }
@@ -220,21 +235,21 @@ public class HealthApp {
     //EFFECT: Ask user for input in order to make food object, return the object
     public Food createFood() {
         String name;
-        int calories;
-        int protein;
-        int carbohydrates;
-        int fat;
+        double calories;
+        double protein;
+        double carbohydrates;
+        double fat;
         Food food;
         System.out.println("\n\tEnter the name of the food item(s) : ");
         name = input.next();
         System.out.println("\tNow enter the calories contained in this item : ");
-        calories = input.nextInt();
+        calories = getDoubleFromUser();
         System.out.println("\tNow enter the amout of protein in this item : ");
-        protein = input.nextInt();
+        protein = getDoubleFromUser();
         System.out.println("\tNow enter the amout of carbohydrates in this item : ");
-        carbohydrates = input.nextInt();
+        carbohydrates = getDoubleFromUser();
         System.out.println("\tNow enter the amout of fat in this item : ");
-        fat = input.nextInt();
+        fat = getDoubleFromUser();
         food = new Food(name, new Calories(calories),new Protein(protein),
                              new Carbohydrates(carbohydrates), new Fat(fat));
         return food;
@@ -247,5 +262,88 @@ public class HealthApp {
         System.out.println("\tMeal added successfully !");     
         foodItemsEaten++;
         reminders();
+    }
+
+    //EFFECT: prompt user to input Double or display an error option if input is not valid 
+    //        until valid user input is received (Double), return double
+    public double getDoubleFromUser() {
+        String userInput = input.next();
+        boolean isDouble = isDouble(userInput);
+        while (!isDouble) {
+            System.out.println("\tPlease check the format of your Input");
+            userInput = input.next();
+            isDouble = isDouble(userInput);           
+        }
+        return Double.valueOf(userInput);
+    }
+
+    //EFFECT: return true if input can be successfully parsed into double or else return false
+    public boolean isDouble(String input) {
+        try {
+            Double.parseDouble(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    // EFFECT: prompt user for input, display error message if date is not in DD-MM-YY format and 
+    //         keep asking user for input until it is not in correct format by showing error message
+    //         return formatted date
+    public String getFormattedDate() {
+        String userInput = input.next();
+        boolean isFormatted = isDateFormatted(userInput);
+        while (!isFormatted) {
+            System.out.println("\tPlease check the format of your Input");
+            userInput = input.next();
+            isFormatted = isDateFormatted(userInput);           
+        }
+        return userInput;
+    }
+
+    // EFFECT: return true if the given input for date is in DD-MM-YY format 
+    public boolean isDateFormatted(String input) {
+        if (input.length() != 8) {
+            return false;
+        }
+        for (int i = 0; i < 8; i++) {
+            if (i == 2 || i == 5) {
+                if (input.charAt(i) != '-') {
+                    return false;
+                }
+            }
+            if (input.charAt(i) > '9') {             
+                return false;
+            }
+            if (i == 2 || i == 5) {
+                if (input.charAt(i) == '-') {
+                    continue;
+                }
+            }          
+        }
+        return true;
+    }
+
+    //EFFECT: ask user to enetr the date and call showProgress() if dailyTracker
+    //        with provided date exists in the daiyTrackerRecord, 
+    //        otherwise shows an error message displaying no dailyTracker forgiven date exists.
+    public void checkPrevProgress() {
+        System.out.println("\tPlease enter the date for which you want to check stats");
+        String date = getFormattedDate();
+        List<DailyTracker> history = dailyTrackerRecord.getRecord();
+        int index = -1;
+        for (DailyTracker dt : history) {
+            index++;
+            if (dt.getDate().equals(date)) {
+                break;
+            }
+        }
+        if (index == -1) {
+            System.out.println("\tNo data exists for the date provided");
+            return;
+        } else {
+            showProgress(index);
+            return;
+        }
     }
 }

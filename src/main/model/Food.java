@@ -13,8 +13,8 @@ public class Food {
     private Fat fat;
     private Carbohydrates carbohydrates;
 
-    private final int highProtein = 20;
-    private final int highCalories = 500;
+    private final double highProtein = 20;
+    private final double highCalories = 500;
 
     //EFFECT: Construct Food and set the fields to given values
     public Food(String name,Calories calories, Protein protein,Carbohydrates carbohydrates, Fat fat) {
@@ -58,25 +58,25 @@ public class Food {
 
     //MODIFIES: this
     //EFFECT: set calories to given value
-    public void setCalories(int value) {
+    public void setCalories(double value) {
         this.calories.setValue(value);
     }
 
     //MODIFIES: this
     //EFFECT: set protein to given value
-    public void setProtein(int value) {
+    public void setProtein(double value) {
         this.protein.setValue(value);
     }
 
     //MODIFIES: this
     //EFFECT: set carbohydrates to given value
-    public void setCarbohydrates(int value) {
+    public void setCarbohydrates(double value) {
         this.carbohydrates.setValue(value);    
     }
 
     //MODIFIES: this
     //EFFECT: set fat to given value
-    public void setFat(int value) {
+    public void setFat(double value) {
         this.fat.setValue(value);
     }
 

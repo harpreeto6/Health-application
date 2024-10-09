@@ -20,3 +20,5 @@ eat throughout the day. Possible features could be like adding different values 
 - As a *User*, I want to track my daily **calories consumption** at any point of day.
 - As a *User*, I want to get **reminders** if i am not following my daily Calorie limit.
 - As a *User*, I want to track my intake of **macro-nutrients** as well.
+- As a *User*, I want to be able to check **whether calorie content is high or low** in my food.
+- As a *User*, I want to be able to track my daily **consumption of previous days**.

@@ -7,14 +7,14 @@ public class Calories {
     private double value;
 
     //EFFFECT: makes a Calories aboject with its value set as the value provided
-    public Calories(int value) {
+    public Calories(double value) {
         this.value = value;
     }
 
     //REQUIRES: value >= 0
     //MODIFIES: This
     //EFFECT: set value field to given value 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

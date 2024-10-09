@@ -3,6 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Class to store different Food items eaten throught the day
+ * provide functionality to add and remove different items from the list
+ * 
+ */
 public class DailyTracker {
 
     private  double caloriesGoal;
@@ -15,7 +20,7 @@ public class DailyTracker {
     private double proteinConsumed = 0;
     private double carbohydratesConsumed = 0;
 
-    //Requires: caloriesGoal and proteinGoal >= 0
+    //REQUIRES: caloriesGoal and proteinGoal >= 0
     //EFFECT: Constructs a DailyTracker by setting up only Date, caloriesGoal and proteinGoal
     public DailyTracker(String date, double proteinGoal, double caloriesGoal) {
         foodRecord = new ArrayList<>();
@@ -24,7 +29,7 @@ public class DailyTracker {
         this.caloriesGoal = caloriesGoal;
     }
 
-    //EFFECT: Constructs a  DailyTracker and set up the fields with appropriate values
+    //EFFECT: Constructs a  DailyTracker and set up the fields with values provided 
     public DailyTracker(String date, Food food, double caloriesGoal, double proteinGoal) {
         foodRecord = new ArrayList<>();
         this.date = date;
@@ -39,7 +44,8 @@ public class DailyTracker {
     }
 
     //MODIFIES: this
-    //EFFECT: add new food into foodRecord List and insert other attributes of Food into appropriate fields
+    //EFFECT: add new food into foodRecord List and add the values of calories,
+    //       protein, carbohydrates and fat from the food into appropriate fields
     public void addFood(Food food) {
         foodRecord.add(food);
         caloriesConsumed += food.getCalories().getValue();
@@ -97,7 +103,7 @@ public class DailyTracker {
         return this.proteinGoal;
     }
 
-    //EFFECT: return the foodRecord for today
+    //EFFECT: return the foodRecord
     public List<Food> getFoodRecord() {
         return this.foodRecord;
     }
