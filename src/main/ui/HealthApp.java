@@ -103,6 +103,7 @@ public class HealthApp {
     //MODIFY: this
     //EFFECT: performing different tasks based on what user selected, 
     //         actions are based on descriptions from displayMenu() method
+    @SuppressWarnings("methodlength")
     private void processUserInput(String userInput) {
         switch (userInput) {
             case("a"):
