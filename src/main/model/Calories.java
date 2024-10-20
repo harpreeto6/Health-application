@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /** *
  * This class is a representationn of Calories present inside a food item
 */
-public class Calories {
+public class Calories implements Writable{
     private double value;
 
     //EFFFECT: makes a Calories aboject with its value set as the value provided
@@ -21,5 +25,12 @@ public class Calories {
     //EFFECT: return value field
     public double getValue() {
         return this.value;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        return null;
+        // stub
+        
     }
 }

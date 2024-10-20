@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /*
  * This class is a representation of protein(macro-nutrients) present inside food items
  */
-public class Protein {
+public class Protein implements Writable{
 
     private double value;
 
@@ -22,6 +26,12 @@ public class Protein {
     //EFFECT: return value field 
     public double getValue() {
         return this.value;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        // stub
+        return null;
     }
 
 }

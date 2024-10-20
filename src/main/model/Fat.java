@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /**
  * Class representing the fat macro-nutrient present inside food
  * **/
-public class Fat {
+public class Fat implements Writable{
 
     private double value;
 
@@ -22,6 +26,12 @@ public class Fat {
     //EFFECT: return value field 
     public double getValue() {
         return this.value;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        // stub
+        return null;
     }
 
 

@@ -3,18 +3,23 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /*
  * This class can store various instances of DailyTracker 
  * and act as a database from which user might be able to get information 
  * about previous days 
  */
-public class DailyTrackerRecord {
+public class DailyTrackerRecord implements Writable{
 
-    private List<DailyTracker> dailytrackerRecord;
+    private List<DailyTracker> trackerRecord;
 
     //EFFECT: constructs a new record, initialize the field trackerRecord
     public DailyTrackerRecord() {
-        dailytrackerRecord = new ArrayList<>();
+        trackerRecord = new ArrayList<>();
     }
 
     //MODIFY: this
@@ -23,7 +28,7 @@ public class DailyTrackerRecord {
     public boolean addDailyTracker(DailyTracker dailyTracker) {
         String date = dailyTracker.getDate();
         boolean exist = false;
-        for (DailyTracker tracker : dailytrackerRecord) {
+        for (DailyTracker tracker : trackerRecord) {
             if (tracker.getDate() == date) {
                 exist = true;
             }
@@ -31,13 +36,25 @@ public class DailyTrackerRecord {
         if (exist) {
             return false;
         } else {
-            dailytrackerRecord.add(dailyTracker);
+            trackerRecord.add(dailyTracker);
             return true;
         }
     }
 
     //EFFECT: return trackerRecord field
     public List<DailyTracker> getRecord() {
-        return dailytrackerRecord;
+        return trackerRecord;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        // stub
+        return null;
+    }
+
+    // EFFECTS: returns trackerRecord in this DailyTrackerRecord as a JSON array
+    private JSONArray thingiesToJson() {
+        //stub
+        return null;
     }
 }

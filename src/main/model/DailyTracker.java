@@ -3,12 +3,17 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /*
  * Class to store different Food items eaten throught the day
  * provide functionality to add and remove different items from the list
  * 
  */
-public class DailyTracker {
+public class DailyTracker implements Writable{
 
     private  double caloriesGoal;
     private  double proteinGoal;
@@ -137,6 +142,18 @@ public class DailyTracker {
     //EFECT: return caloriesBurned field
     public double getCaloriesBurned() {
         return this.caloriesBurned;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        // stub
+        return null;
+    }
+
+    // EFFECTS: returns foodRecord in this DailyTracker as a JSON array
+    private JSONArray thingiesToJson() {
+        //stub
+        return null;
     }
 
 }

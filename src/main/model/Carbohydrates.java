@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /** 
  * This class represents carbohydrates(macro-nutrient) present inside a food item
  * **/
-public class Carbohydrates {
+public class Carbohydrates implements Writable{
 
     private double value;      //representing the value of carbohydrates
 
@@ -22,5 +26,11 @@ public class Carbohydrates {
     //EFFECT: return value field 
     public double getValue() {
         return value;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        // stub
+        return null;
     }
 }

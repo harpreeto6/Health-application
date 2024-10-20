@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /** 
  * A food class is a representation of food item which will have Calories, Protein,
  * Fat and Carbohydrates classes as it's attributes
  * Class will tell  whether a food utem is high in Calories and/or high in Protein
  * **/
-public class Food {
+public class Food implements Writable{
 
     private String name;
     private Calories calories;
@@ -100,5 +104,11 @@ public class Food {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        // stub
+        return null;
     }
 }

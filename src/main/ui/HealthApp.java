@@ -24,10 +24,10 @@ public class HealthApp {
     private DailyTrackerRecord dailyTrackerRecord;
     private DailyTracker dailyTracker;
     private Scanner input;
-    private int currentIndex = -1;                 
+    //private int currentIndex = -1;                 
     private double caloriesReminder;                    
     private  double proteinReminder;                    
-    private int foodItemsEaten = 0;
+    //private int foodItemsEaten = 0;
 
     private final int itemsReminder = 4;             
     private final double percentReminder = .60;      
@@ -83,8 +83,8 @@ public class HealthApp {
         System.out.println("\tDate : " + dailyTracker.getDate() + ", Protein Goal : " + dailyTracker.getProteinGoal() 
                                    + "g, Calories Goal : " + dailyTracker.getCaloriesGoal() + " cal");
         dailyTrackerRecord.addDailyTracker(dailyTracker);
-        currentIndex++; 
-        foodItemsEaten = 0;
+        //currentIndex++; 
+        //foodItemsEaten = 0;
     }
 
     //EFFECTS: displaying menu of options to user
@@ -113,7 +113,7 @@ public class HealthApp {
                 foodRecord();
                 break;
             case("s"): 
-                showProgress(currentIndex);               
+                showProgress((dailyTrackerRecord.getRecord().size()-1));               
                 break;
             case("n"): 
                 dailyTrackerSetup();
@@ -160,6 +160,7 @@ public class HealthApp {
 
     //EFFECT: provide the list of food items eaten throughout current day with their nutritional Value
     private void foodRecord() {
+        int currentIndex = (dailyTrackerRecord.getRecord().size()-1);
         List<Food> record = dailyTrackerRecord.getRecord().get(currentIndex).getFoodRecord();
 
         for (Food item : record) {
@@ -172,6 +173,8 @@ public class HealthApp {
 
     //EFFECT: provide reminders if foodItemsEaten >= itemsReminder 
     private void reminders() {
+        int currentIndex = (dailyTrackerRecord.getRecord().size()-1);
+        int foodItemsEaten = (dailyTrackerRecord.getRecord().get(currentIndex).getNumFoodItems());
         if (foodItemsEaten >= itemsReminder) { 
             if (dailyTrackerRecord.getRecord().get(currentIndex).getProteinConsumed() < proteinReminder) {
                 System.out.println("\t YOU ARE BEHIND YOUR PROTEIN GOAL !!");
@@ -267,7 +270,7 @@ public class HealthApp {
     public void addFoodToTracker(Food food) {
         dailyTracker.addFood(food);
         System.out.println("\tMeal added successfully !");     
-        foodItemsEaten++;
+        //foodItemsEaten++;
         reminders();
     }
 
