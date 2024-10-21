@@ -13,7 +13,7 @@ import persistence.Writable;
  * and act as a database from which user might be able to get information 
  * about previous days 
  */
-public class DailyTrackerRecord implements Writable{
+public class DailyTrackerRecord implements Writable {
 
     private List<DailyTracker> trackerRecord;
 
@@ -48,13 +48,19 @@ public class DailyTrackerRecord implements Writable{
 
     @Override
     public JSONObject toJson() {
-        // stub
-        return null;
+        JSONObject json = new JSONObject();
+        
+        json.put("foodRecord", trackerRecordToJson());
+        return json;
     }
 
     // EFFECTS: returns trackerRecord in this DailyTrackerRecord as a JSON array
-    private JSONArray thingiesToJson() {
-        //stub
-        return null;
+    private JSONArray trackerRecordToJson() {
+
+        JSONArray jsonArray = new JSONArray();
+        for (DailyTracker f : trackerRecord) {
+            jsonArray.put(f.toJson());
+        }
+        return jsonArray;
     }
 }

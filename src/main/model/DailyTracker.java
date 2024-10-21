@@ -13,7 +13,7 @@ import persistence.Writable;
  * provide functionality to add and remove different items from the list
  * 
  */
-public class DailyTracker implements Writable{
+public class DailyTracker implements Writable {
 
     private  double caloriesGoal;
     private  double proteinGoal;
@@ -25,6 +25,8 @@ public class DailyTracker implements Writable{
     private double proteinConsumed = 0;
     private double carbohydratesConsumed = 0;
     private double caloriesBurned = 0;
+
+    
 
     //REQUIRES: caloriesGoal and proteinGoal >= 0
     //EFFECT: Constructs a DailyTracker by setting up only Date, caloriesGoal and proteinGoal
@@ -146,14 +148,29 @@ public class DailyTracker implements Writable{
 
     @Override
     public JSONObject toJson() {
-        // stub
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("caloriesGoal", caloriesGoal);
+        json.put("proteinGoal", proteinGoal);
+        json.put("date", date);
+        json.put("caloriesConsumed", caloriesConsumed);
+        json.put("fatConsumed", fatConsumed);
+        json.put("proteinConsumed", proteinConsumed);
+        json.put("carbohydratesConsumed", carbohydratesConsumed);
+        json.put("caloriesBurned", caloriesBurned);
+        json.put("foodRecord", foodRecordToJson());
+        return json;
     }
 
     // EFFECTS: returns foodRecord in this DailyTracker as a JSON array
-    private JSONArray thingiesToJson() {
-        //stub
-        return null;
+    private JSONArray foodRecordToJson() {
+
+        JSONArray jsonArray = new JSONArray();
+        for (Food f : foodRecord) {
+            jsonArray.put(f.toJson());
+        }
+        return jsonArray;
     }
+
+    
 
 }

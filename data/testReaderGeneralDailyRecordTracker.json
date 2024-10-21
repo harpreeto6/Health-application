@@ -1,0 +1,24 @@
+{
+    "trackerRecord": [
+        {
+            "date": "12-12-12",
+            "caloriesGoal": "2500",
+             "ProteinGoal": "150",
+            "caloriesConsumed": "400",
+             "fatConsumed": "10",
+            "proteinConsumed": "20",
+             "carbohydratesConsumed": "30",
+            "caloriesBurned": "0",
+            "trackerRecord" : [
+                {
+                    "name": "Burg",
+                    "calories": "2500",
+                    "protein": "20",
+                    "carbohydrates" :"30",
+                    "fat" :"10"
+                }
+            ]
+        }
+    ]
+
+}

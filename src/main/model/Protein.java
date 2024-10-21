@@ -7,7 +7,7 @@ import persistence.Writable;
 /*
  * This class is a representation of protein(macro-nutrients) present inside food items
  */
-public class Protein implements Writable{
+public class Protein implements Writable {
 
     private double value;
 
@@ -30,8 +30,9 @@ public class Protein implements Writable{
 
     @Override
     public JSONObject toJson() {
-        // stub
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("value", value);
+        return json;
     }
 
 }

@@ -7,7 +7,7 @@ import persistence.Writable;
 /** *
  * This class is a representationn of Calories present inside a food item
 */
-public class Calories implements Writable{
+public class Calories implements Writable {
     private double value;
 
     //EFFFECT: makes a Calories aboject with its value set as the value provided
@@ -29,8 +29,9 @@ public class Calories implements Writable{
 
     @Override
     public JSONObject toJson() {
-        return null;
-        // stub
+        JSONObject json = new JSONObject();
+        json.put("value", value);
+        return json;
         
     }
 }

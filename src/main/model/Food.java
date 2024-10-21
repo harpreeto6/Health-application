@@ -9,7 +9,7 @@ import persistence.Writable;
  * Fat and Carbohydrates classes as it's attributes
  * Class will tell  whether a food utem is high in Calories and/or high in Protein
  * **/
-public class Food implements Writable{
+public class Food implements Writable {
 
     private String name;
     private Calories calories;
@@ -108,7 +108,12 @@ public class Food implements Writable{
 
     @Override
     public JSONObject toJson() {
-        // stub
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("calories", calories.toJson());
+        json.put("protein", protein.toJson());
+        json.put("carbohydrates", carbohydrates.toJson());
+        json.put("fat", name);
+        return json;
     }
 }

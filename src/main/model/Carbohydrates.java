@@ -7,7 +7,7 @@ import persistence.Writable;
 /** 
  * This class represents carbohydrates(macro-nutrient) present inside a food item
  * **/
-public class Carbohydrates implements Writable{
+public class Carbohydrates implements Writable {
 
     private double value;      //representing the value of carbohydrates
 
@@ -30,7 +30,8 @@ public class Carbohydrates implements Writable{
 
     @Override
     public JSONObject toJson() {
-        // stub
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("value", value);
+        return json;
     }
 }

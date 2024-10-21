@@ -7,7 +7,7 @@ import persistence.Writable;
 /**
  * Class representing the fat macro-nutrient present inside food
  * **/
-public class Fat implements Writable{
+public class Fat implements Writable {
 
     private double value;
 
@@ -30,8 +30,9 @@ public class Fat implements Writable{
 
     @Override
     public JSONObject toJson() {
-        // stub
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("value", value);
+        return json;
     }
 
 

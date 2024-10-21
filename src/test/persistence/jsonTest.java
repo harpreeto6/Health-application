@@ -1,5 +1,5 @@
 package persistence;
 
-public class jsonTest {
+public class JsonTest {
 
 }
