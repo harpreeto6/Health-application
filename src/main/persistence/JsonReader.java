@@ -56,7 +56,7 @@ public class JsonReader {
 
     // MODIFIES: dtr
     // EFFECTS: parses DailTracker, food and other macroNutrient classes
-    // from JSON object and adds them to DailyTracker
+    // from JSON object and adds them to DailyTrackerRecord
     private void addTrackerRecord(DailyTrackerRecord dtr, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("trackerRecord");
         for (Object json : jsonArray) {
@@ -68,7 +68,7 @@ public class JsonReader {
             double caloriesBurned = nextTracker.getDouble("caloriesBurned");
 
             JSONArray jsonArrayFoodRecord = nextTracker.getJSONArray("foodRecord");
-            DailyTracker tr = new DailyTracker(date, caloriesGoal, proteinGoal);
+            DailyTracker tr = new DailyTracker(date, proteinGoal, caloriesGoal);
             addFoodToTracker(tr, jsonArrayFoodRecord);
             tr.setCaloriesBurned(caloriesBurned);
 
@@ -76,8 +76,8 @@ public class JsonReader {
         }
     }
 
-    // Modifies dt
-    // EFFECTS: parses food items from jsonArray and add it to dt
+    // Modifies: dt
+    // EFFECTS: parses food items from jsonArray and add it to dt (DailyTracker)
     private void addFoodToTracker(DailyTracker dt, JSONArray jsonArray) {
 
         for (Object json : jsonArray) {

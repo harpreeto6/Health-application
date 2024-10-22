@@ -1,5 +1,7 @@
 package ui;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,6 +12,8 @@ import model.DailyTrackerRecord;
 import model.Fat;
 import model.Food;
 import model.Protein;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 
 /*  
@@ -23,14 +27,16 @@ public class HealthApp {
 
     private DailyTrackerRecord dailyTrackerRecord;
     private DailyTracker dailyTracker;
-    private Scanner input;
-    //private int currentIndex = -1;                 
+    private Scanner input;                
     private double caloriesReminder;                    
     private  double proteinReminder;                    
-    //private int foodItemsEaten = 0;
 
     private final int itemsReminder = 4;             
-    private final double percentReminder = .60;      
+    private final double percentReminder = .60;   
+    
+    private static final String JSON_STORE = "./data/dailyTrackerRecord.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     //MODIFIES: this
     //EFFECT: runs the HealthApp application by initiating necessary fields 
@@ -43,6 +49,8 @@ public class HealthApp {
     //EFFECT: runs the user interface where user can interact with app
     private void userInterface() {
         input = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         boolean running = true;
         String userInput;
         System.out.println("\tWelcome to your personal Health app");
@@ -92,12 +100,15 @@ public class HealthApp {
         System.out.println("\n\tSelect from:");
         System.out.println("\ta -> add new meal eaten");
         System.out.println("\th -> get meals eaten");
+        System.out.println("\tb -> to add calories burned");
         System.out.println("\ts -> show progess");
         System.out.println("\tn -> start new day");
         System.out.println("\tt -> check if food is healthy");
+        System.out.println("\tw -> to save your data");
+        System.out.println("\tl -> to load your previous data");
         System.out.println("\tc -> to check stats for previous dates");
-        System.out.println("\tb -> to add calories burned");
         System.out.println("\tq -> quit");
+
     }
 
     //MODIFY: this
@@ -113,7 +124,7 @@ public class HealthApp {
                 foodRecord();
                 break;
             case("s"): 
-                showProgress((dailyTrackerRecord.getRecord().size()-1));               
+                showProgress((dailyTrackerRecord.getRecord().size() - 1));
                 break;
             case("n"): 
                 dailyTrackerSetup();
@@ -126,6 +137,12 @@ public class HealthApp {
                 break;
             case("b"): 
                 addCaloriesBurned();
+                break;
+            case("w"): 
+                saveDailyTrackerRecord();
+                break;
+            case("l"): 
+                loadDailyTrackerRecord();;
                 break;
             default: 
                 System.out.println("\tSelection not valid...");
@@ -160,7 +177,7 @@ public class HealthApp {
 
     //EFFECT: provide the list of food items eaten throughout current day with their nutritional Value
     private void foodRecord() {
-        int currentIndex = (dailyTrackerRecord.getRecord().size()-1);
+        int currentIndex = (dailyTrackerRecord.getRecord().size() - 1);
         List<Food> record = dailyTrackerRecord.getRecord().get(currentIndex).getFoodRecord();
 
         for (Food item : record) {
@@ -173,7 +190,7 @@ public class HealthApp {
 
     //EFFECT: provide reminders if foodItemsEaten >= itemsReminder 
     private void reminders() {
-        int currentIndex = (dailyTrackerRecord.getRecord().size()-1);
+        int currentIndex = (dailyTrackerRecord.getRecord().size() - 1);
         int foodItemsEaten = (dailyTrackerRecord.getRecord().get(currentIndex).getNumFoodItems());
         if (foodItemsEaten >= itemsReminder) { 
             if (dailyTrackerRecord.getRecord().get(currentIndex).getProteinConsumed() < proteinReminder) {
@@ -272,6 +289,34 @@ public class HealthApp {
         System.out.println("\tMeal added successfully !");     
         //foodItemsEaten++;
         reminders();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads dailyRecorTracker from file
+    private void loadDailyTrackerRecord() {
+        try {
+            DailyTrackerRecord temp  = jsonReader.read();
+            List<DailyTracker> history = dailyTrackerRecord.getRecord();
+            for (DailyTracker dt : history) {
+                temp.addDailyTracker(dt);
+            }
+            dailyTrackerRecord = temp;
+            System.out.println("Loaded " + "previous data from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: saves the dailyTrackerRecord to file
+    private void saveDailyTrackerRecord() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(dailyTrackerRecord);
+            jsonWriter.close();
+            System.out.println("Saved " + " your progess in "  + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
 
     //EFFECT: prompt user to input Double or display an error option if input is not valid 

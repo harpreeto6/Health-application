@@ -7,13 +7,29 @@
              "foodRecord": [
                 {
                     "name": "Burg",
-                    "calories": {"value": 2500},
+                    "calories": {"value": 400},
                     "protein": {"value": 20},
                     "carbohydrates" :{"value": 30},
                     "fat" :{"value": 10}
                 }
             ],
-            "caloriesBurned": "0"
+            "caloriesBurned": 0
+            
+        },
+        {
+            "date": "13-12-22",
+            "caloriesGoal": 2400,
+             "proteinGoal": 120,
+            "caloriesBurned": 100,
+            "foodRecord": [
+               {
+                   "name": "salad",
+                   "calories": {"value": 200},
+                   "protein": {"value": 10},
+                   "carbohydrates" :{"value": 10},
+                   "fat" :{"value": 0}
+               }
+           ],
             
         }
     ]

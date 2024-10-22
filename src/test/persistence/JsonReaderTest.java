@@ -4,7 +4,6 @@ import model.Food;
 import model.DailyTracker;
 import model.DailyTrackerRecord;
 
-import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.Test;
 
 import model.Protein;
@@ -45,12 +44,27 @@ class JsonReaderTest extends JsonTest {
         JsonReader reader = new JsonReader("./data/testReaderGeneralDailyRecordTracker.json");
         try {
             DailyTrackerRecord dtr = reader.read();
-            assertEquals(1, dtr.getRecord().size());
             List<DailyTracker> list = dtr.getRecord();
-            assertEquals(1, list.size());
+            assertEquals(2, list.size());
             assertTrue(dtr.getRecord().get(0).getFoodRecord().get(0).getName().equals("Burg"));
-            assertEquals(2500, dtr.getRecord().get(0).getFoodRecord().get(0).getCalories().getValue(), 
-                            list.get(0).getFoodRecord().get(0).getCalories().getValue());
+            assertEquals(2500, list.get(0).getCaloriesGoal());
+            assertEquals(150, list.get(0).getProteinGoal());
+            assertEquals(20, list.get(0).getFoodRecord().get(0).getProtein().getValue());
+            assertEquals(30, list.get(0).getFoodRecord().get(0).getCarbohydates().getValue());
+            assertEquals(10, list.get(0).getFoodRecord().get(0).getFat().getValue());
+            assertEquals(0, list.get(0).getCaloriesBurned());
+            assertTrue(list.get(0).getDate().equals("12-12-12"));
+
+            assertEquals(2400, list.get(1).getCaloriesGoal());
+            assertEquals(120, list.get(1).getProteinGoal());
+            assertEquals(200, list.get(1).getFoodRecord().get(0).getCalories().getValue());
+            assertEquals(10, list.get(1).getFoodRecord().get(0).getProtein().getValue());
+            assertEquals(10, list.get(1).getFoodRecord().get(0).getCarbohydates().getValue());
+            assertEquals(0, list.get(1).getFoodRecord().get(0).getFat().getValue());
+            assertEquals(100, list.get(1).getCaloriesBurned());
+            assertTrue(list.get(1).getDate().equals("13-12-22"));
+            assertTrue(list.get(1).getFoodRecord().get(0).getName().equals("salad"));
+
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

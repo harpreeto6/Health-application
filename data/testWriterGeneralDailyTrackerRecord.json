@@ -1,13 +1,37 @@
-{"trackerRecord": [{
-    "date": "12-12-12",
-    "caloriesBurned": 0,
-    "foodRecord": [{
-        "carbohydrates": {"value": 30},
-        "protein": {"value": 20},
-        "name": "burger",
-        "fat": {"value": 10},
-        "calories": {"value": 400}
-    }],
-    "caloriesGoal": 2500,
-    "proteinGoal": 150
-}]}
+{"trackerRecord": [
+    {
+        "date": "12-12-12",
+        "caloriesBurned": 0,
+        "foodRecord": [{
+            "carbohydrates": {"value": 30},
+            "protein": {"value": 20},
+            "name": "burger",
+            "fat": {"value": 10},
+            "calories": {"value": 400}
+        }],
+        "caloriesGoal": 2500,
+        "proteinGoal": 150
+    },
+    {
+        "date": "12-1-12",
+        "caloriesBurned": 100,
+        "foodRecord": [
+            {
+                "carbohydrates": {"value": 25},
+                "protein": {"value": 15},
+                "name": "salad",
+                "fat": {"value": 5},
+                "calories": {"value": 250}
+            },
+            {
+                "carbohydrates": {"value": 25},
+                "protein": {"value": 15},
+                "name": "salad2",
+                "fat": {"value": 5},
+                "calories": {"value": 250}
+            }
+        ],
+        "caloriesGoal": 2400,
+        "proteinGoal": 120
+    }
+]}

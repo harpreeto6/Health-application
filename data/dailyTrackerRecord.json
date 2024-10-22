@@ -1,0 +1,37 @@
+{"trackerRecord": [
+    {
+        "date": "12-23-34",
+        "caloriesBurned": 0,
+        "foodRecord": [{
+            "carbohydrates": {"value": 654},
+            "protein": {"value": 346},
+            "name": "bur",
+            "fat": {"value": 34},
+            "calories": {"value": 34}
+        }],
+        "caloriesGoal": 2300,
+        "proteinGoal": 120
+    },
+    {
+        "date": "23-54-34",
+        "caloriesBurned": 23,
+        "foodRecord": [
+            {
+                "carbohydrates": {"value": 4},
+                "protein": {"value": 43},
+                "name": "nof",
+                "fat": {"value": 23},
+                "calories": {"value": 244}
+            },
+            {
+                "carbohydrates": {"value": 3},
+                "protein": {"value": 5},
+                "name": "cre",
+                "fat": {"value": 3},
+                "calories": {"value": 34}
+            }
+        ],
+        "caloriesGoal": 532,
+        "proteinGoal": 43
+    }
+]}
