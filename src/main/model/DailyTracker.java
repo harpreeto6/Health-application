@@ -137,7 +137,7 @@ public class DailyTracker implements Writable {
     //REQUIRE: value > 0
     //MODIFY: this
     //EFECT: add the value provided to the caloriesBurned field.
-    public void caloriesBurned(double value) {
+    public void setCaloriesBurned(double value) {
         this.caloriesBurned += value;
     }
 
@@ -152,10 +152,6 @@ public class DailyTracker implements Writable {
         json.put("caloriesGoal", caloriesGoal);
         json.put("proteinGoal", proteinGoal);
         json.put("date", date);
-        json.put("caloriesConsumed", caloriesConsumed);
-        json.put("fatConsumed", fatConsumed);
-        json.put("proteinConsumed", proteinConsumed);
-        json.put("carbohydratesConsumed", carbohydratesConsumed);
         json.put("caloriesBurned", caloriesBurned);
         json.put("foodRecord", foodRecordToJson());
         return json;

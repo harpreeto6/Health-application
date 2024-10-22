@@ -31,7 +31,7 @@ class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderEmptyDailyTrackerRecord() {
-        JsonReader reader = new JsonReader("./data/testReaderEmptyWorkRoom.json");
+        JsonReader reader = new JsonReader("./data/testReaderEmptyDailyTrackerRecord.json");
         try {
             DailyTrackerRecord dtr = reader.read();
             assertEquals(0, dtr.getRecord().size());
@@ -42,13 +42,13 @@ class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderGeneralDailyTrackerRecord() {
-        JsonReader reader = new JsonReader("./data/testReaderGeneralWorkRoom.json");
+        JsonReader reader = new JsonReader("./data/testReaderGeneralDailyRecordTracker.json");
         try {
             DailyTrackerRecord dtr = reader.read();
             assertEquals(1, dtr.getRecord().size());
             List<DailyTracker> list = dtr.getRecord();
             assertEquals(1, list.size());
-            assertTrue(dtr.getRecord().get(0).getFoodRecord().get(0).equals("burg"));
+            assertTrue(dtr.getRecord().get(0).getFoodRecord().get(0).getName().equals("Burg"));
             assertEquals(2500, dtr.getRecord().get(0).getFoodRecord().get(0).getCalories().getValue(), 
                             list.get(0).getFoodRecord().get(0).getCalories().getValue());
         } catch (IOException e) {

@@ -1,0 +1,13 @@
+{"trackerRecord": [{
+    "date": "12-12-12",
+    "caloriesBurned": 0,
+    "foodRecord": [{
+        "carbohydrates": {"value": 30},
+        "protein": {"value": 20},
+        "name": "burger",
+        "fat": {"value": 10},
+        "calories": {"value": 400}
+    }],
+    "caloriesGoal": 2500,
+    "proteinGoal": 150
+}]}

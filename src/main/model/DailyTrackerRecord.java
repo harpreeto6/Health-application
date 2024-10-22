@@ -50,7 +50,7 @@ public class DailyTrackerRecord implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         
-        json.put("foodRecord", trackerRecordToJson());
+        json.put("trackerRecord", trackerRecordToJson());
         return json;
     }
 

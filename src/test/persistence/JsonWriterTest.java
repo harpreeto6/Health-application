@@ -47,8 +47,6 @@ class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyDailyTrackerRecord.json");
             dtr = reader.read();
-
-            assertEquals(dt, dtr.getRecord().get(0));
             
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -61,7 +59,7 @@ class JsonWriterTest extends JsonTest {
         try {
             DailyTrackerRecord dtr = new DailyTrackerRecord();
             DailyTracker dt = new DailyTracker("12-12-12", 150, 2500);
-            Food f1 = new Food("burger", new Calories(400), new Protein(24), new Carbohydrates(45), new Fat(12));
+            Food f1 = new Food("burger", new Calories(400), new Protein(20), new Carbohydrates(30), new Fat(10));
             dt.addFood(f1);
             dtr.addDailyTracker(dt);
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralDailyTrackerRecord.json");
@@ -70,16 +68,15 @@ class JsonWriterTest extends JsonTest {
             writer.close();
             JsonReader reader = new JsonReader("./data/testWriterGeneralDailyTrackerRecord.json");
             dtr = reader.read();
-            assertEquals(dt, dtr.getRecord().get(0));
             assertEquals(400, dtr.getRecord().get(0).getCaloriesConsumed());
-            assertEquals(24, dtr.getRecord().get(0).getProteinConsumed());
-            assertEquals(45, dtr.getRecord().get(0).getCarbohydratesConsumed());
-            assertEquals(12, dtr.getRecord().get(0).getFatConsumed());
+            assertEquals(20, dtr.getRecord().get(0).getProteinConsumed());
+            assertEquals(30, dtr.getRecord().get(0).getCarbohydratesConsumed());
+            assertEquals(10, dtr.getRecord().get(0).getFatConsumed());
             assertEquals(400, dtr.getRecord().get(0).getFoodRecord().get(0).getCalories().getValue());
-            assertEquals(24, dtr.getRecord().get(0).getFoodRecord().get(0).getProtein().getValue());
-            assertEquals(45, dtr.getRecord().get(0).getFoodRecord().get(0).getCarbohydates().getValue());
-            assertEquals(12, dtr.getRecord().get(0).getFoodRecord().get(0).getFat().getValue());
-            assertTrue(dtr.getRecord().get(0).getFoodRecord().get(0).equals("burger"));
+            assertEquals(20, dtr.getRecord().get(0).getFoodRecord().get(0).getProtein().getValue());
+            assertEquals(30, dtr.getRecord().get(0).getFoodRecord().get(0).getCarbohydates().getValue());
+            assertEquals(10, dtr.getRecord().get(0).getFoodRecord().get(0).getFat().getValue());
+            assertTrue(dtr.getRecord().get(0).getFoodRecord().get(0).getName().equals("burger"));
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }

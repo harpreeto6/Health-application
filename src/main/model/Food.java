@@ -113,7 +113,7 @@ public class Food implements Writable {
         json.put("calories", calories.toJson());
         json.put("protein", protein.toJson());
         json.put("carbohydrates", carbohydrates.toJson());
-        json.put("fat", name);
+        json.put("fat", fat.toJson());
         return json;
     }
 }
