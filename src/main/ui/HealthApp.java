@@ -224,15 +224,15 @@ public class HealthApp {
 
     //EFFECT: provide reminders if foodItemsEaten >= itemsReminder 
     private void reminders() {
-        int currentIndex = (dailyTrackerRecord.getRecord().size() - 1);
-        int foodItemsEaten = (dailyTrackerRecord.getRecord().get(currentIndex).getNumFoodItems());
+        //int currentIndex = (dailyTrackerRecord.getRecord().size() - 1);
+        int foodItemsEaten = (dailyTracker.getNumFoodItems());
         if (foodItemsEaten >= itemsReminder) { 
-            if (dailyTrackerRecord.getRecord().get(currentIndex).getProteinConsumed() < proteinReminder) {
+            if (dailyTracker.getProteinConsumed() < proteinReminder) {
                 System.out.println("\t YOU ARE BEHIND YOUR PROTEIN GOAL !!");
             } else { 
                 System.out.println("\t YOU ARE OVER YOUR PROTEIN GOAL !!");
             }
-            if (dailyTrackerRecord.getRecord().get(currentIndex).getCaloriesConsumed() < caloriesReminder) {
+            if (dailyTracker.getCaloriesConsumed() < caloriesReminder) {
                 System.out.println("\t YOU ARE BEHIND YOUR CALORIES GOAL !! ");
             } else {
                 System.out.println("\t YOU ARE OVER YOUR CALORIES GOAL !! ");
@@ -349,6 +349,7 @@ public class HealthApp {
     // EFFECTS: saves the dailyTrackerRecord to file
     private void saveDailyTrackerRecord() {
         try {
+            loadDailyTrackerRecord();
             jsonWriter.open();
             jsonWriter.write(dailyTrackerRecord);
             jsonWriter.close();

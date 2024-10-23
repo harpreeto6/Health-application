@@ -37,7 +37,6 @@ class JsonReaderTest extends JsonTest {
         }
     }
 
-    @SuppressWarnings("methodlength")
     @Test
     void testReaderGeneralDailyTrackerRecord() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralDailyRecordTracker.json");
@@ -45,24 +44,14 @@ class JsonReaderTest extends JsonTest {
             DailyTrackerRecord dtr = reader.read();
             List<DailyTracker> list = dtr.getRecord();
             assertEquals(2, list.size());
-            assertTrue(dtr.getRecord().get(0).getFoodRecord().get(0).getName().equals("Burg"));
-            assertEquals(2500, list.get(0).getCaloriesGoal());
-            assertEquals(150, list.get(0).getProteinGoal());
-            assertEquals(20, list.get(0).getFoodRecord().get(0).getProtein().getValue());
-            assertEquals(30, list.get(0).getFoodRecord().get(0).getCarbohydates().getValue());
-            assertEquals(10, list.get(0).getFoodRecord().get(0).getFat().getValue());
-            assertEquals(0, list.get(0).getCaloriesBurned());
-            assertTrue(list.get(0).getDate().equals("12-12-12"));
 
-            assertEquals(2400, list.get(1).getCaloriesGoal());
-            assertEquals(120, list.get(1).getProteinGoal());
-            assertEquals(200, list.get(1).getFoodRecord().get(0).getCalories().getValue());
-            assertEquals(10, list.get(1).getFoodRecord().get(0).getProtein().getValue());
-            assertEquals(10, list.get(1).getFoodRecord().get(0).getCarbohydates().getValue());
-            assertEquals(0, list.get(1).getFoodRecord().get(0).getFat().getValue());
-            assertEquals(100, list.get(1).getCaloriesBurned());
-            assertTrue(list.get(1).getDate().equals("13-12-22"));
-            assertTrue(list.get(1).getFoodRecord().get(0).getName().equals("salad"));
+            
+
+            checkDailyTrackerFields("12-12-12", 2500, 150, 0, 400, 20, 30, 10, list.get(0));
+            checkDailyTrackerFields("13-12-22", 2400, 120, 100, 200, 10, 10, 0, list.get(1));
+
+            checkFood("Burg", 400, 20, 30, 10, list.get(0).getFoodRecord().get(0));
+            checkFood("salad", 200, 10, 10, 0, list.get(1).getFoodRecord().get(0));
 
         } catch (IOException e) {
             fail("Couldn't read from file");

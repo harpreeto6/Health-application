@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 /** *
- * This class is a representationn of Calories present inside a food item
+ * This class is a representationn of Calories (MAcro- nutrient) present inside a food item
 */
 public class Calories implements Writable {
     private double value;

@@ -5,27 +5,14 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 /** 
- * This class represents carbohydrates(macro-nutrient) present inside a food item
+ * This class represents carbohydrates (Macro-nutrient) present inside a food item
  * **/
-public class Carbohydrates implements Writable {
+public class Carbohydrates extends MacroNutrient implements Writable {
 
-    private double value;      //representing the value of carbohydrates
-
-    //EFFECT: creates Carbohydrate object with its value set up as provided value
+    //EFFECT: creates Carbohydrate object with its value (super field) set up as provided value
     public Carbohydrates(double value) {
-        this.value = value;
-    }
-
-    //REQUIRES: value >= 0
-    //MODIFIES: This
-    //EFFECT: set value field to given value 
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    //EFFECT: return value field 
-    public double getValue() {
-        return value;
+       // this.value = value;
+       super(value);
     }
 
     @Override

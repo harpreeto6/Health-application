@@ -49,10 +49,8 @@ class JsonWriterTest extends JsonTest {
             JsonReader reader = new JsonReader("./data/testWriterEmptyDailyTrackerRecord.json");
             dtr = reader.read();
             List<DailyTracker> list = dtr.getRecord();
-            assertTrue(list.get(0).getDate().equals("12-12-12"));
-            assertEquals(150,list.get(0).getProteinGoal());
-            assertEquals(2500, list.get(0).getCaloriesGoal());
-            
+            checkDailyTrackerFields("12-12-12", 2500, 150, 0, 0, 0, 0, 0, list.get(0));
+  
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -71,10 +69,10 @@ class JsonWriterTest extends JsonTest {
             dt.addFood(f1);
             dt2.addFood(f2);
             dt2.addFood(f3);
+            dt2.setCaloriesBurned(100);
+
             dtr.addDailyTracker(dt);
             dtr.addDailyTracker(dt2);
-
-            dt2.setCaloriesBurned(100);
 
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralDailyTrackerRecord.json");
             writer.open();
@@ -84,42 +82,16 @@ class JsonWriterTest extends JsonTest {
             dtr = reader.read();
 
             List<DailyTracker> list = dtr.getRecord();
-
             assertEquals(2, list.size());
 
-            //testing dtr and dt are correctly wrtten
-            assertEquals(2500, list.get(0).getCaloriesGoal());
-            assertEquals(150, list.get(0).getProteinGoal());
-            assertEquals(400, list.get(0).getCaloriesConsumed());
-            assertEquals(20, list.get(0).getProteinConsumed());
-            assertEquals(30, list.get(0).getCarbohydratesConsumed());
-            assertEquals(10, list.get(0).getFatConsumed());
-            assertEquals(400, list.get(0).getFoodRecord().get(0).getCalories().getValue());
-            assertEquals(20, list.get(0).getFoodRecord().get(0).getProtein().getValue());
-            assertEquals(30, list.get(0).getFoodRecord().get(0).getCarbohydates().getValue());
-            assertEquals(10, list.get(0).getFoodRecord().get(0).getFat().getValue());
-            assertTrue(list.get(0).getFoodRecord().get(0).getName().equals("burger"));
+            //testing dtr and dt, dt2 are correctly wrtten
+            checkDailyTrackerFields("12-12-12", 2500, 150, 0, 400, 20, 30, 10, list.get(0));
+            checkDailyTrackerFields("12-1-12", 2400, 120, 100, 500, 30, 50, 10, list.get(1));
 
-            //testing dtr and dt2 are correctly written
-            assertEquals(2400, list.get(1).getCaloriesGoal());
-            assertEquals(120, list.get(1).getProteinGoal());
-            assertEquals(500, list.get(1).getCaloriesConsumed());
-            assertEquals(30, list.get(1).getProteinConsumed());
-            assertEquals(50, list.get(1).getCarbohydratesConsumed());
-            assertEquals(10, list.get(1).getFatConsumed());
-            assertEquals(250, list.get(1).getFoodRecord().get(0).getCalories().getValue());
-            assertEquals(15, list.get(1).getFoodRecord().get(0).getProtein().getValue());
-            assertEquals(25, list.get(1).getFoodRecord().get(0).getCarbohydates().getValue());
-            assertEquals(5, list.get(1).getFoodRecord().get(0).getFat().getValue());
-            assertTrue(list.get(1).getFoodRecord().get(0).getName().equals("salad"));
-            assertEquals(100, list.get(1).getCaloriesBurned());
-
-            //testing f3 in dt2 is correctly written
-            assertEquals(250, list.get(1).getFoodRecord().get(1).getCalories().getValue());
-            assertEquals(15, list.get(1).getFoodRecord().get(1).getProtein().getValue());
-            assertEquals(25, list.get(1).getFoodRecord().get(1).getCarbohydates().getValue());
-            assertEquals(5, list.get(1).getFoodRecord().get(1).getFat().getValue());
-            assertTrue(list.get(1).getFoodRecord().get(1).getName().equals("salad2"));
+            //testing f1,f2,f3 are correctly written
+            checkFood("burger", 400, 20, 30, 10, list.get(0).getFoodRecord().get(0));
+            checkFood("salad", 250,15,25,5, list.get(1).getFoodRecord().get(0));
+            checkFood("salad2", 250,15,25,5, list.get(1).getFoodRecord().get(1));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

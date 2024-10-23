@@ -1,13 +1,50 @@
-{"trackerRecord": [{
-    "date": "12-23-34",
-    "caloriesBurned": 0,
-    "foodRecord": [{
-        "carbohydrates": {"value": 5},
-        "protein": {"value": 34},
-        "name": "oodles",
-        "fat": {"value": 1},
-        "calories": {"value": 23}
-    }],
-    "caloriesGoal": 203,
-    "proteinGoal": 20
-}]}
+{"trackerRecord": [
+    {
+        "date": "03-03-03",
+        "caloriesBurned": 0,
+        "foodRecord": [{
+            "carbohydrates": {"value": 23},
+            "protein": {"value": 23},
+            "name": "noodle",
+            "fat": {"value": 23},
+            "calories": {"value": 23}
+        }],
+        "caloriesGoal": 23,
+        "proteinGoal": 233
+    },
+    {
+        "date": "01-01-01",
+        "caloriesBurned": 0,
+        "foodRecord": [
+            {
+                "carbohydrates": {"value": 23},
+                "protein": {"value": 23},
+                "name": "noodles",
+                "fat": {"value": 23},
+                "calories": {"value": 21}
+            },
+            {
+                "carbohydrates": {"value": 23},
+                "protein": {"value": 23},
+                "name": "burg",
+                "fat": {"value": 43},
+                "calories": {"value": 1211}
+            }
+        ],
+        "caloriesGoal": 3232,
+        "proteinGoal": 232
+    },
+    {
+        "date": "03-03-03",
+        "caloriesBurned": 0,
+        "foodRecord": [{
+            "carbohydrates": {"value": 3},
+            "protein": {"value": 32},
+            "name": "shake",
+            "fat": {"value": 32},
+            "calories": {"value": 32}
+        }],
+        "caloriesGoal": 2344,
+        "proteinGoal": 234
+    }
+]}
