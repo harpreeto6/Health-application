@@ -11,8 +11,7 @@ public class Carbohydrates extends MacroNutrient implements Writable {
 
     //EFFECT: creates Carbohydrate object with its value (super field) set up as provided value
     public Carbohydrates(double value) {
-       // this.value = value;
-       super(value);
+        super(value);
     }
 
     @Override
