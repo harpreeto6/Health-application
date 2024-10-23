@@ -16,7 +16,9 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import org.json.*;
-import org.junit.experimental.categories.Category;
+
+// Referenced from the JsonSerialization Demo
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
 // Represents a reader that reads DailyTrackerRecord from JSON data stored in file
 public class JsonReader {

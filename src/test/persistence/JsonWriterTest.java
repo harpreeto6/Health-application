@@ -12,13 +12,14 @@ import model.Fat;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Referenced from the JsonSerialization Demo
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 class JsonWriterTest extends JsonTest {
-   
     
     @Test
     void testWriterInvalidFile() {

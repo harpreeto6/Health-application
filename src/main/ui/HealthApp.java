@@ -31,7 +31,7 @@ public class HealthApp {
     private double caloriesReminder;                    
     private  double proteinReminder;                    
 
-    private final int itemsReminder = 4;             
+    private final int itemsReminder = 3;             
     private final double percentReminder = .60;   
     
     private static final String JSON_STORE = "./data/dailyTrackerRecord.json";
@@ -54,7 +54,7 @@ public class HealthApp {
         boolean running = true;
         String userInput;
         System.out.println("\tWelcome to your personal Health app");
-        dailyTrackerSetup();
+        initialSetup();
         
         while (running) {
             displayMenu();
@@ -68,6 +68,39 @@ public class HealthApp {
                 processUserInput(userInput);
             }
         }
+    }
+
+    //MODIFIES: this
+    //EFFECT: ask user if they want to load previous data or start new day,
+            // if no previous data found ask your to setup new dailyTracker.
+    private void initialSetup() {
+        String userInput;
+        boolean running = true;
+        
+        input = new Scanner(System.in);     
+        while (running) {
+            System.out.println("\tn -> start a new day");
+            System.out.println("\tl -> load current data");
+            userInput = input.next();
+            userInput.toLowerCase();
+            if (userInput.equals("n")) {
+                running = false;
+                dailyTrackerSetup();              
+            } else if (userInput.equals("l")) {
+                if (loadDailyTrackerRecord() == true) {
+                    if (dailyTrackerRecord.getRecord().isEmpty()) {
+                        System.out.println("\tNo previous record found, You can start a new day Now :-)");
+                        dailyTrackerSetup();
+                    }
+                }
+                running = false;
+            } else {
+                System.out.println("\tSelection not valid...");
+            }
+        }
+
+
+
     }
 
     //MODIFY: this
@@ -149,6 +182,7 @@ public class HealthApp {
         }   
     }
 
+    //MODIFIES: this
     //EFFECT: initiate food item by asking user for nutrition value and add it to dailyTracker,
     //        increases the currentIndex Counter, provide reminders if needed
     private void addFood() {
@@ -292,8 +326,9 @@ public class HealthApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads dailyRecorTracker from file
-    private void loadDailyTrackerRecord() {
+    // EFFECTS: returns true if loading dailyTrackerRecord from file is successfull
+    //          returns false otherwise
+    private boolean loadDailyTrackerRecord() {
         try {
             DailyTrackerRecord temp  = jsonReader.read();
             List<DailyTracker> history = dailyTrackerRecord.getRecord();
@@ -301,9 +336,13 @@ public class HealthApp {
                 temp.addDailyTracker(dt);
             }
             dailyTrackerRecord = temp;
+            int lastRecordIndex = dailyTrackerRecord.getRecord().size() - 1;
+            dailyTracker = dailyTrackerRecord.getRecord().get(lastRecordIndex);
             System.out.println("Loaded " + "previous data from " + JSON_STORE);
+            return true;
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
+            return false;
         }
     }
 
@@ -386,14 +425,16 @@ public class HealthApp {
         System.out.println("\tPlease enter the date for which you want to check stats");
         String date = getFormattedDate();
         List<DailyTracker> history = dailyTrackerRecord.getRecord();
+        boolean exists = false;
         int index = -1;
         for (DailyTracker dt : history) {
             index++;
             if (dt.getDate().equals(date)) {
+                exists = true;
                 break;
             }
         }
-        if (index == -1) {
+        if (exists == false) {
             System.out.println("\tNo data exists for the date provided");
             return;
         } else {

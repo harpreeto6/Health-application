@@ -1,19 +1,17 @@
 package persistence;
 
-import model.Food;
 import model.DailyTracker;
 import model.DailyTrackerRecord;
 
 import org.junit.jupiter.api.Test;
 
-import model.Protein;
-import model.Carbohydrates;
-import model.Fat;
-
 import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+// Referenced from the JsonSerialization Demo
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
 class JsonReaderTest extends JsonTest {
 
@@ -39,6 +37,7 @@ class JsonReaderTest extends JsonTest {
         }
     }
 
+    @SuppressWarnings("methodlength")
     @Test
     void testReaderGeneralDailyTrackerRecord() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralDailyRecordTracker.json");
