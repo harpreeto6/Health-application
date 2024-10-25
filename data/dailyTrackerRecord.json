@@ -46,5 +46,75 @@
         }],
         "caloriesGoal": 2344,
         "proteinGoal": 234
+    },
+    {
+        "date": "03-03-03",
+        "caloriesBurned": 0,
+        "foodRecord": [{
+            "carbohydrates": {"value": 23},
+            "protein": {"value": 23},
+            "name": "noodle",
+            "fat": {"value": 23},
+            "calories": {"value": 23}
+        }],
+        "caloriesGoal": 23,
+        "proteinGoal": 233
+    },
+    {
+        "date": "01-01-01",
+        "caloriesBurned": 0,
+        "foodRecord": [
+            {
+                "carbohydrates": {"value": 23},
+                "protein": {"value": 23},
+                "name": "noodles",
+                "fat": {"value": 23},
+                "calories": {"value": 21}
+            },
+            {
+                "carbohydrates": {"value": 23},
+                "protein": {"value": 23},
+                "name": "burg",
+                "fat": {"value": 43},
+                "calories": {"value": 1211}
+            }
+        ],
+        "caloriesGoal": 3232,
+        "proteinGoal": 232
+    },
+    {
+        "date": "03-03-03",
+        "caloriesBurned": 0,
+        "foodRecord": [
+            {
+                "carbohydrates": {"value": 3},
+                "protein": {"value": 32},
+                "name": "shake",
+                "fat": {"value": 32},
+                "calories": {"value": 32}
+            },
+            {
+                "carbohydrates": {"value": 123},
+                "protein": {"value": 321},
+                "name": "asdfsa",
+                "fat": {"value": 231},
+                "calories": {"value": 213}
+            }
+        ],
+        "caloriesGoal": 2344,
+        "proteinGoal": 234
+    },
+    {
+        "date": "04-04-04",
+        "caloriesBurned": 0,
+        "foodRecord": [{
+            "carbohydrates": {"value": 4},
+            "protein": {"value": 23},
+            "name": "burg",
+            "fat": {"value": 34},
+            "calories": {"value": 23}
+        }],
+        "caloriesGoal": 3400,
+        "proteinGoal": 200
     }
 ]}
