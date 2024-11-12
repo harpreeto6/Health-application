@@ -190,7 +190,7 @@ public class HealthApp {
         addFoodToTracker(food);
     }
 
-    //REQUIRE: currentIndex <= this.currentIndex
+    //REQUIRE: currentIndex <= dailyTrackerRecord.currentIndex
     //EFFECT: shows calories and protein goal for today to user and the amount of macro-nutrients user consumed
     private void showProgress(int currentIndex) {
         System.out.println("\tYour Progress stats is : ");
@@ -317,7 +317,7 @@ public class HealthApp {
     }
 
     //MODIFY: this
-    //EFFECT: add food to dailyTracker, increase currentIndex and give reminders if needed
+    //EFFECT: add food to dailyTracker, give reminders if needed
     public void addFoodToTracker(Food food) {
         dailyTracker.addFood(food);
         System.out.println("\tMeal added successfully !");     
