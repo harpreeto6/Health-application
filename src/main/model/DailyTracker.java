@@ -12,6 +12,8 @@ import persistence.Writable;
  * Class to store different Food items eaten throught the day
  * provide functionality to add and remove different items from the list
  * 
+ * Not using java to get date string require for this class inOrder to test 
+ * that whether all the methods are working correctly
  */
 public class DailyTracker implements Writable {
 
