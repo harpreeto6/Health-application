@@ -3,17 +3,13 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.Timer;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,11 +50,15 @@ public class MainWindow {
     private JPanel buttonPanel;
     private JPanel foodFieldsPanel;
     private JPanel centerPanel;
-    private JPanel initialPanel;
+    private JPanel welcomePanel;
+    private JPanel welcomeButtonsPanel;
 
 
-    private JButton addFoodButton;
+    private JButton addMealButton;
     private JButton foodRecordButton;
+    private JButton newDayButton;
+    private JButton loadButton;
+    private JButton addGoalsButton;
 
     private JTextField foodNameField;
     private JTextField caloriesField;
@@ -78,6 +78,8 @@ public class MainWindow {
     private final String caloriesGoalText = "Enter calories goal";
     private final String dateFormatText = "DD-MM-YY";
 
+    private boolean goalsSet = false;
+
 
     public MainWindow() {
         initialize();
@@ -87,79 +89,202 @@ public class MainWindow {
     //EFFECTS : Initialize the fields and call appropriate methods in appropriate sequence to make the GUI run
     private void initialize() {
         dailyTrackerRecord = new DailyTrackerRecord();
-        dailyTracker = new DailyTracker(JSON_STORE, 120, 2500);
-        dailyTrackerRecord.addDailyTracker(dailyTracker);
-
+       
         initializeJPanelAndJFrame();
-
-        frame.add(buttonPanel, BorderLayout.SOUTH);
-        frame.add(foodFieldsPanel,BorderLayout.NORTH); //
-        frame.add(centerPanel, BorderLayout.CENTER);
+        //frame.setVisible(true);
 
         frame.setTitle("Main Window");
         frame.setSize(800,500);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        initialSetup();
 
-        //frame.setResizable(false);       
-        buttonPanel.setBackground(Color.GRAY);
+        // frame.add(buttonPanel, BorderLayout.SOUTH);
+        // frame.add(foodFieldsPanel,BorderLayout.NORTH); 
+        // frame.add(centerPanel, BorderLayout.CENTER);
 
-        addButtonsToButtonPanel();      
-        createAddFoodFields();
+
+     
+        // buttonPanel.setBackground(Color.GRAY);
+
+        // addButtonsToButtonPanel();      
+        // createAddFoodFields();
     }
 
     //MODIFIES: this
-    //EFFECT: set up initial GUI to ask user for his protein goals and calories goal
+    //EFFECT: set up initial GUI to ask user for his protein goals and calories goal plus inputs
     private void initialSetup() {
-        JLabel loadOrNew = new JLabel("<html><pre> Do you want to start new day or load curent day </pre></html>");
-        JButton newDay = new JButton("New Day");
-        JButton loadDay = new JButton("Load Current Day");
-        loadOrNew.add(newDay);
-        loadOrNew.add(loadDay);
-        frame.add(loadOrNew);
-
-        JLabel goalsInfo = new JLabel("<html><pre> Enter your protein and calories goal </pre></html>");
+        
+        setUpWelcomePanels();
+        setUpWelcomeButtons();
+        frame.add(welcomePanel, BorderLayout.NORTH);
+        frame.add(welcomeButtonsPanel, BorderLayout.SOUTH);
+        
         
     }
 
     //MODIFIES: this
-    //EFFECT: load current or new day to the app
-    private void performNewOrLoadDay(JButton newDay, JButton loadDay) {
+    //EFFECT: remove non-necessary panels required for main menu from frame and add necessary methods if needed
+    private void makeMainMenuVisible() {
+        frame.remove(welcomeButtonsPanel);
+        frame.remove(welcomePanel);
+        centerPanel.removeAll();
 
-        newDay.addActionListener(new ActionListener() {
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+        frame.add(foodFieldsPanel,BorderLayout.NORTH); 
+        frame.add(centerPanel, BorderLayout.CENTER); 
+
+        buttonPanel.setBackground(Color.GRAY);
+
+        addButtonsToButtonPanel();      
+        createAddFoodFields();
+
+        refreshPanel(buttonPanel);
+        refreshPanel(foodFieldsPanel);
+        refreshPanel(centerPanel);
+    }
+
+    //MODIFIS: this
+    //EFFECT: setup welcomePanel and add appropriate label to it
+    private void setUpWelcomePanels() {      
+        welcomePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel welcomeLabel = new JLabel("<html><pre> Do you want to start new day or load curent day </pre></html>");
+        welcomePanel.add(welcomeLabel);               
+    }
+
+    //MODIFIES: this
+    //EFFECT: initialize and setup newDayButton and loadButton and add then to welcomeButtonsPanel
+    //        provide functionality to both buttons similar to HealthApp class
+    private void setUpWelcomeButtons() {
+
+        welcomeButtonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        newDayButton = new JButton("New Day");
+        loadButton = new JButton("Load Current Day");
+        welcomeButtonsPanel.add(newDayButton, new FlowLayout(FlowLayout.CENTER));
+        welcomeButtonsPanel.add(loadButton, new FlowLayout(FlowLayout.CENTER));
+
+        newDayButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                JLabel goalsInfo = new JLabel("<html><pre> Enter your protein and calories goal </pre></html>");
-                caloriesGoalField = new JTextField(caloriesGoalText,12);
-                proteinGoalField = new JTextField(proteinGoalText,12);
-                dateField = new JTextField(dateFormatText,12);
-                setUpTextField(proteinField, proteinGoalText);
-                setUpTextField(caloriesField, caloriesGoalText);
-                setUpTextField(dateField, dateFormatText);
-                setUpNewDay();
+                newDayButtonPressed();
             }
             
         });
 
-        loadDay.addActionListener(new ActionListener() {
+        loadButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //nothing 
+                //TODO
             }
             
         });
     }
 
     //MODIFIES: this
-    //EFFECT: Initialize JPanels and JFrames for this class
+    //EFFECT: create several java components so user can set up new day including
+    //         proteinGoalField, caloriesGoalField, dateField components
+    //         also removes the panels from frame which are not required for this function
+    private void newDayButtonPressed() {
+
+        welcomePanel.removeAll();
+        welcomeButtonsPanel.removeAll();
+        
+        frame.remove(centerPanel);
+        frame.remove(buttonPanel);
+        frame.remove(foodFieldsPanel);
+        frame.remove(welcomeButtonsPanel);
+        frame.remove(welcomePanel);
+
+        frame.add(welcomeButtonsPanel);
+        frame.add(welcomePanel);
+     
+        setUpGoalsDisplay();
+        setUpAddGoalsButtonDisplay();   
+        setUpAddGoalsButton();
+
+        refreshPanel(welcomePanel);
+        refreshPanel(welcomeButtonsPanel);            
+    }
+
+    //MODIFIES: this
+    //EFFECT: initalize addGoalsButton and add it to welcomeButtonsPanel
+    private void setUpAddGoalsButtonDisplay() {
+        addGoalsButton = new JButton("<html><pre> Set Goals </pre><html>"); 
+        welcomeButtonsPanel.add(addGoalsButton, new FlowLayout(FlowLayout.CENTER));
+    }
+
+    //MODOFIES: this
+    //EFFECT: initalize fields required for setting up protein and calories goals and add it to welcomePanel
+    private void setUpGoalsDisplay() {
+        JLabel goalsInfo = new JLabel("<html><pre> Enter your protein and calories goal </pre></html>");
+        caloriesGoalField = new JTextField(caloriesGoalText,12);
+        proteinGoalField = new JTextField(proteinGoalText,12);
+        dateField = new JTextField(dateFormatText,12);
+
+        welcomePanel.add(goalsInfo);
+        welcomePanel.add(caloriesGoalField);
+        welcomePanel.add(proteinGoalField);
+        welcomePanel.add(dateField);
+
+        setUpTextField(proteinGoalField, proteinGoalText);
+        setUpTextField(caloriesGoalField, caloriesGoalText);
+        setUpTextField(dateField, dateFormatText);       
+    }
+
+    //MODIFIES: this
+    //EFFECT: add functionality to addGoalsButton which will allow it it display in app if newDay is setup properly
+    //        otherwise : display a message conevying new day is not set properly
+    private void setUpAddGoalsButton() {
+
+        addGoalsButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                if (setUpNewDay()) {                  
+                    makeMainMenuVisible();                  
+                } else {
+                    centerPanel.removeAll();
+                    resetGoalsFields();
+                    JLabel msg = new JLabel("Please check your fields again");
+                    centerPanel.add(msg, new FlowLayout(FlowLayout.CENTER) );
+                    frame.add(centerPanel);
+                    refreshPanel(centerPanel);
+                }
+            }
+            
+        });
+    }
+
+    //MODIFY: this
+    //EFFECT: Constructs a new dailyTracker from caloriesGoalField, 
+    //          proteinGoalField, dateField and add it into dailyRecord
+    private boolean setUpNewDay() {
+        if (isDouble(proteinGoalField.getText()) && isDouble(caloriesGoalField.getText()) 
+                && isDateFormatted(dateField.getText())) {
+            dailyTracker = new DailyTracker(dateField.getText(), Double.valueOf(proteinGoalField.getText()),
+             Double.valueOf(caloriesGoalField.getText()));
+
+            dailyTrackerRecord.addDailyTracker(dailyTracker);
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECT: Initialize frame, buttonPanel, foodfieldsPanel, centerPanel
     private void initializeJPanelAndJFrame() {
         frame = new JFrame();
+
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         foodFieldsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        initialPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     }
 
     //MODIFIES : this
@@ -173,13 +298,13 @@ public class MainWindow {
     //          add ActionListner to both buttons to do the task given in their names
     private void addButtonsToButtonPanel() {
 
-        addFoodButton = new JButton("<html><pre> Add Meal </pre><html>");
+        addMealButton = new JButton("<html><pre> Add Meal </pre><html>");
         foodRecordButton = new JButton("<html><pre>   View<br>Food Record</pre></html>");
         
-        buttonPanel.add(addFoodButton);
+        buttonPanel.add(addMealButton);
         buttonPanel.add(foodRecordButton);
 
-        setAddMealButton(addFoodButton);
+        setAddMealButton(addMealButton);
         setFoodRecordButton(foodRecordButton);
 
     }
@@ -195,18 +320,17 @@ public class MainWindow {
             public void actionPerformed(ActionEvent e) {
                 centerPanel.removeAll();
                 refreshPanel(centerPanel);               
-                if (isDouble(proteinField.getText()) && isDouble(fatField.getText()) && isDouble(carbohydratesField.getText()) && 
-                    isDouble(caloriesField.getText()) && !(foodNameField.getText().equals(foodNameText))) {
+                if (isDouble(proteinField.getText()) && isDouble(fatField.getText())
+                        && isDouble(carbohydratesField.getText()) 
+                        && isDouble(caloriesField.getText()) 
+                        && !(foodNameField.getText().equals(foodNameText))) {
                     addFoodToTracker(createFood());
                     resetFoodFields();
                 } else {
                     JLabel lbl = new JLabel("<html><pre>Add Food failed , Please check FoodFields</pre></html>");
                     centerPanel.add(lbl);                
                 }
-            }
-
-            
-            
+            }          
         });      
     }
 
@@ -222,10 +346,10 @@ public class MainWindow {
                 JLabel lbl;
                 centerPanel.removeAll();
                 refreshPanel(centerPanel);
-                if(!dailyTracker.getFoodRecord().isEmpty()) {
+                if (!dailyTracker.getFoodRecord().isEmpty()) {
                    
                     ArrayList<String> msg = foodRecord();                  
-                    for(String i : msg) {
+                    for (String i : msg) {
                         lbl = new JLabel("<html>" + i + "<br></html>");
                         centerPanel.add(lbl);
                     }
@@ -238,6 +362,14 @@ public class MainWindow {
         });
          
     
+    }
+
+    //MODIFIES: thhis
+    //EFFECT: reset the text inside fields required for food items to default texts
+    private void resetGoalsFields() {
+        caloriesGoalField.setText(caloriesGoalText);
+        proteinGoalField.setText(proteinGoalText);
+        dateField.setText(dateFormatText);
     }
 
     //MODIFIES: thhis
@@ -264,49 +396,43 @@ public class MainWindow {
         proteinField = new JTextField(proteinText,8);
         fatField = new JTextField(fatText,8);
 
-         foodFieldsPanel.add(foodNameField);
-         foodFieldsPanel.add(caloriesField);
-         foodFieldsPanel.add(carbohydratesField);
-         foodFieldsPanel.add(proteinField);
-         foodFieldsPanel.add(fatField);
+        foodFieldsPanel.add(foodNameField);
+        foodFieldsPanel.add(caloriesField);
+        foodFieldsPanel.add(carbohydratesField);
+        foodFieldsPanel.add(proteinField);
+        foodFieldsPanel.add(fatField);
 
-         setUpTextField(foodNameField,foodNameText);
-         setUpTextField(caloriesField,caloriesText);
-         setUpTextField(carbohydratesField,carbohydratesText);
-         setUpTextField(proteinField,proteinText);
-         setUpTextField(fatField,fatText);
+        setUpTextField(foodNameField,foodNameText);
+        setUpTextField(caloriesField,caloriesText);
+        setUpTextField(carbohydratesField,carbohydratesText);
+        setUpTextField(proteinField,proteinText);
+        setUpTextField(fatField,fatText);
                
     }
     
-    //MODIFY: this
-    //EFFECT: Constructs a new dailyTracker and add it into dailyRecord
-    private void setUpNewDay() {
-        if (isDouble(proteinGoalField.getText()) && isDouble(caloriesGoalField.getText()) && isDateFormatted(dateField.getText())) {
-            dailyTracker = new DailyTracker(dateField.getText(), proteinReminder, caloriesReminder);
-        }
-    }
+
 
 
     //MODIFIES: jTextField
     //EFFECT: remove string from jTextField if focus gained and add back string 
     //       if jTextField lost focus without getting user input 
-    private void setUpTextField(JTextField jTextField, String string) {
+    private void setUpTextField(JTextField textField, String string) {
 
-        jTextField.addFocusListener( new FocusListener() {
+        textField.addFocusListener(new FocusListener() {
 
             @Override
             public void focusGained(FocusEvent e) {
-                if (jTextField.getText().equals(string)) {
-                    jTextField.setForeground(Color.BLACK);
-                    jTextField.setBackground(Color.WHITE);
-                    jTextField.setText("");
+                if (textField.getText().equals(string)) {
+                    textField.setForeground(Color.BLACK);
+                    textField.setBackground(Color.WHITE);
+                    textField.setText("");
                 }
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                if (jTextField.getText().equals("")) {
-                    jTextField.setText(string);
+                if (textField.getText().equals("")) {
+                    textField.setText(string);
                 }
             }
             
@@ -358,23 +484,33 @@ public class MainWindow {
                                 + item.getCalories().getValue() + " cal ,protein : " 
                                 + item.getProtein().getValue() + "g, carbohydrates : " 
                                 + item.getCarbohydates().getValue() + "g, fat : " + item.getFat().getValue() + "g\n");
-                                text.add(ans);
-                                ans = "";
+            text.add(ans);
+            ans = "";
         }
         return text;
     }
 
     //EFFECT: create a food item based on the information provided in fields
     public Food createFood() {
-        Food f = new Food(foodNameField.getText(),new Calories(Double.valueOf(caloriesField.getText())),new Protein(Double.valueOf(proteinField.getText()) ),
-                    new Carbohydrates(Double.valueOf(carbohydratesField.getText())),new Fat( Double.valueOf(fatField.getText())));
+        Food f = new Food(foodNameField.getText(),new Calories(Double.valueOf(caloriesField.getText())),
+                    new Protein(Double.valueOf(proteinField.getText()) ),
+                    new Carbohydrates(Double.valueOf(carbohydratesField.getText())),
+                    new Fat(Double.valueOf(fatField.getText())));
         return f;
     }
 
     //MODIFY: this
     //EFFECT: add food to dailyTracker
     public void addFoodToTracker(Food food) {
-        dailyTracker.addFood(food);
+
+        if (dailyTrackerRecord.getRecord().isEmpty()) {
+            
+        } else {
+            int size = dailyTrackerRecord.getRecord().size();
+            dailyTracker = dailyTrackerRecord.getRecord().get(size - 1);
+            dailyTracker.addFood(food);
+        }
+        
     }
 
     // MODIFIES: this
