@@ -46,5 +46,34 @@
         }],
         "caloriesGoal": 2500,
         "proteinGoal": 200
+    },
+    {
+        "date": "01-01-01",
+        "caloriesBurned": 0,
+        "foodRecord": [
+            {
+                "carbohydrates": {"value": 12},
+                "protein": {"value": 28},
+                "name": "soup",
+                "fat": {"value": 5},
+                "calories": {"value": 200}
+            },
+            {
+                "carbohydrates": {"value": 11},
+                "protein": {"value": 2},
+                "name": "hj",
+                "fat": {"value": 2},
+                "calories": {"value": 1}
+            },
+            {
+                "carbohydrates": {"value": 30},
+                "protein": {"value": 20},
+                "name": "paraunthe",
+                "fat": {"value": 1},
+                "calories": {"value": 600}
+            }
+        ],
+        "caloriesGoal": 2500,
+        "proteinGoal": 150
     }
 ]}
