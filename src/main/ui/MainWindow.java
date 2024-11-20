@@ -319,32 +319,27 @@ public class MainWindow {
     //EFFECT : add functionality to show button so it will show progress for the date entered
     private void setUpShowButton() {
         showButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                String date = dateField.getText();
                 showProgressPanel.removeAll();
                 refreshPanel(showProgressPanel);
                 JLabel msg;
-                if (!isDateFormatted(date)) {
-                    msg = new JLabel("<html> Please check format of date <html>");
-                    showProgressPanel.add(msg, new FlowLayout(FlowLayout.CENTER));
+                if (!isDateFormatted(dateField.getText())) {
+                    showProgressPanel.add(new JLabel("<html> Please check format of date <html>"));
                 } else {
-                    int index = checkPrevProgress(date);
+                    int index = checkPrevProgress(dateField.getText());
                     if (index == -1) {
-                        msg = new JLabel("<html> No Record exist for this date <html>");
-                        showProgressPanel.add(msg, new FlowLayout(FlowLayout.CENTER));
+                        showProgressPanel.add(new JLabel("<html> No Record exist for this date <html>"));
                     } else {
                         ArrayList<String> data = showProgress(index);                  
                         for (String i : data) {
-                        msg = new JLabel("<html>" + i + "<br></html>");
-                        showProgressPanel.add(msg, new FlowLayout(FlowLayout.CENTER));
+                            msg = new JLabel("<html>" + i + "<br></html>");
+                            showProgressPanel.add(msg, new FlowLayout(FlowLayout.CENTER));
                         }
                     }
                 }
                 showProgressMenu();
-            } 
-            
+            }            
         });
     }
 
@@ -359,16 +354,16 @@ public class MainWindow {
                 JLabel lbl;
                 showProgressPanel.removeAll();
                 int lastIndex = dailyTrackerRecord.getRecord().size() - 1;
-                if(lastIndex >= 0) {
+                if (lastIndex >= 0) {
                     ArrayList<String> msg = showProgress(lastIndex);                  
-                for (String i : msg) {
-                    lbl = new JLabel("<html>" + i + "<br></html>");
-                    showProgressPanel.add(lbl, new FlowLayout(FlowLayout.CENTER));
-                }
-                refreshPanel(centerPanel);
-                refreshPanel(showProgressPanel);
-                refreshPanel(buttonPanel);
-                showProgressMenu(); 
+                    for (String i : msg) {
+                        lbl = new JLabel("<html>" + i + "<br></html>");
+                        showProgressPanel.add(lbl, new FlowLayout(FlowLayout.CENTER));
+                    }
+                    refreshPanel(centerPanel);
+                    refreshPanel(showProgressPanel);
+                    refreshPanel(buttonPanel);
+                    showProgressMenu(); 
                 }
                                
             }            
@@ -505,7 +500,7 @@ public class MainWindow {
                 JLabel lbl;
                 centerPanel.removeAll();
                 refreshPanel(centerPanel);
-                if(dailyTrackerRecord.getRecord().isEmpty()) {
+                if (dailyTrackerRecord.getRecord().isEmpty()) {
 
                     JLabel lbl2 = new JLabel("<html>Haven't eaten any meals yet</html>");
                     centerPanel.add(lbl2);
@@ -518,7 +513,7 @@ public class MainWindow {
                         centerPanel.add(lbl);
                     }
                 } else {
-                   JLabel lbl2 = new JLabel("<html>Haven't eaten any meals yet</html>");
+                    JLabel lbl2 = new JLabel("<html>Haven't eaten any meals yet</html>");
                     centerPanel.add(lbl2);
                 }
             }            
@@ -538,7 +533,6 @@ public class MainWindow {
         setUpShowProgressButton();
         setUpShowButton();
         setUpHomeButton();
-
     }
 
     
@@ -681,9 +675,7 @@ public class MainWindow {
     //MODIFY: this
     //EFFECT: add food to dailyTracker
     public void addFoodToTracker(Food food) {
-
         dailyTracker.addFood(food);
-
     }
 
     // MODIFIES: this
