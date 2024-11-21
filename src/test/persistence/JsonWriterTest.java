@@ -69,7 +69,7 @@ class JsonWriterTest extends JsonTest {
             dt.addFood(f1);
             dt2.addFood(f2);
             dt2.addFood(f3);
-            dt2.setCaloriesBurned(100);
+            dt2.addCaloriesBurned(100);
 
             dtr.addDailyTracker(dt);
             dtr.addDailyTracker(dt2);

@@ -49,7 +49,7 @@
     },
     {
         "date": "01-01-01",
-        "caloriesBurned": 0,
+        "caloriesBurned": 15,
         "foodRecord": [
             {
                 "carbohydrates": {"value": 12},
@@ -75,5 +75,111 @@
         ],
         "caloriesGoal": 2500,
         "proteinGoal": 150
+    },
+    {
+        "date": "12-12-12",
+        "caloriesBurned": 0,
+        "foodRecord": [{
+            "carbohydrates": {"value": 30},
+            "protein": {"value": 20},
+            "name": "burger",
+            "fat": {"value": 10},
+            "calories": {"value": 400}
+        }],
+        "caloriesGoal": 2500,
+        "proteinGoal": 150
+    },
+    {
+        "date": "12-1-12",
+        "caloriesBurned": 100,
+        "foodRecord": [
+            {
+                "carbohydrates": {"value": 25},
+                "protein": {"value": 15},
+                "name": "salad",
+                "fat": {"value": 5},
+                "calories": {"value": 250}
+            },
+            {
+                "carbohydrates": {"value": 25},
+                "protein": {"value": 15},
+                "name": "salad2",
+                "fat": {"value": 5},
+                "calories": {"value": 250}
+            }
+        ],
+        "caloriesGoal": 2400,
+        "proteinGoal": 120
+    },
+    {
+        "date": "01-01-01",
+        "caloriesBurned": 0,
+        "foodRecord": [{
+            "carbohydrates": {"value": 45},
+            "protein": {"value": 23},
+            "name": "poutine",
+            "fat": {"value": 30},
+            "calories": {"value": 1200}
+        }],
+        "caloriesGoal": 2500,
+        "proteinGoal": 200
+    },
+    {
+        "date": "01-01-01",
+        "caloriesBurned": 15,
+        "foodRecord": [
+            {
+                "carbohydrates": {"value": 12},
+                "protein": {"value": 28},
+                "name": "soup",
+                "fat": {"value": 5},
+                "calories": {"value": 200}
+            },
+            {
+                "carbohydrates": {"value": 11},
+                "protein": {"value": 2},
+                "name": "hj",
+                "fat": {"value": 2},
+                "calories": {"value": 1}
+            },
+            {
+                "carbohydrates": {"value": 30},
+                "protein": {"value": 20},
+                "name": "paraunthe",
+                "fat": {"value": 1},
+                "calories": {"value": 600}
+            }
+        ],
+        "caloriesGoal": 2500,
+        "proteinGoal": 150
+    },
+    {
+        "date": "02-03-04",
+        "caloriesBurned": 0,
+        "foodRecord": [
+            {
+                "carbohydrates": {"value": 30},
+                "protein": {"value": 5},
+                "name": "ice cream",
+                "fat": {"value": 10},
+                "calories": {"value": 500}
+            },
+            {
+                "carbohydrates": {"value": 50},
+                "protein": {"value": 30},
+                "name": "paraunthe",
+                "fat": {"value": 30},
+                "calories": {"value": 1000}
+            },
+            {
+                "carbohydrates": {"value": 20},
+                "protein": {"value": 5},
+                "name": "salad",
+                "fat": {"value": 3},
+                "calories": {"value": 350}
+            }
+        ],
+        "caloriesGoal": 1800,
+        "proteinGoal": 200
     }
 ]}

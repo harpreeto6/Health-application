@@ -139,7 +139,7 @@ public class DailyTracker implements Writable {
     //REQUIRE: value > 0
     //MODIFY: this
     //EFECT: add the value provided to the caloriesBurned field.
-    public void setCaloriesBurned(double value) {
+    public void addCaloriesBurned(double value) {
         this.caloriesBurned += value;
     }
 

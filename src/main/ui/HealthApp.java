@@ -449,6 +449,6 @@ public class HealthApp {
     public void addCaloriesBurned() {
         System.out.println("\tPlease enter the amount of calories burned");
         double caloriesBurned = getDoubleFromUser();
-        dailyTracker.setCaloriesBurned(caloriesBurned);
+        dailyTracker.addCaloriesBurned(caloriesBurned);
     }
 }

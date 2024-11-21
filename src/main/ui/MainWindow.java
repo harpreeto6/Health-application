@@ -2,24 +2,15 @@ package ui;
 
 
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import org.w3c.dom.events.MouseEvent;
 
 import model.Calories;
 import model.Carbohydrates;
@@ -61,7 +52,9 @@ public class MainWindow {
     private JPanel goalButtonPanel;
     private JPanel showProgressPanel;
     private JPanel showProgressButtonPanel;
+    private JPanel eastButtonPanel;
 
+    private JScrollPane scrollPane;
 
     private JButton addMealButton;
     private JButton foodRecordButton;
@@ -72,6 +65,9 @@ public class MainWindow {
     private JButton showProgressButton;
     private JButton showButton;
     private JButton homeButton;
+    private JButton addActivityButton;
+    private JButton addCaloriesButton;
+    
 
     private JTextField foodNameField;
     private JTextField caloriesField;
@@ -81,6 +77,7 @@ public class MainWindow {
     private JTextField proteinGoalField;
     private JTextField caloriesGoalField;
     private JTextField dateField;
+    private JTextField caloriesBurnedField;
 
     private final String foodNameText = "Enter food name";
     private final String caloriesText = "Enter calories";
@@ -89,9 +86,8 @@ public class MainWindow {
     private final String carbohydratesText = "Enter carbohydrates";
     private final String proteinGoalText = "Enter protein goal";
     private final String caloriesGoalText = "Enter calories goal";
+    private final String caloriesBurnedText = "Enter calories burned";
     private final String dateFormatText = "DD-MM-YY";
-
-    private boolean goalsSet = false;
 
 
     public MainWindow() {
@@ -106,7 +102,13 @@ public class MainWindow {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);   
         initializeJComponents();
+
+        // Add the JScrollPane to the frame
+        frame.add(scrollPane, BorderLayout.CENTER);
+
         setUpAllButtons();
+        setUpAllTextField();
+        
 
         frame.setTitle("Main Window");
         frame.setSize(800,500);
@@ -116,6 +118,7 @@ public class MainWindow {
         welcomeMenu();
 
     }
+
 
     //MODIFIES: this
     //EFFECT: set up initial GUI to ask user for his protein goals and calories goal plus inputs
@@ -132,21 +135,49 @@ public class MainWindow {
     private void mainMenu() {
         removeAllPanels();      
         centerPanel.removeAll();
+        foodFieldsPanel.removeAll();
+        eastButtonPanel.removeAll();
 
         frame.add(buttonPanel, BorderLayout.SOUTH);
         frame.add(foodFieldsPanel,BorderLayout.NORTH); 
-        frame.add(centerPanel, BorderLayout.CENTER); 
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.add(eastButtonPanel, BorderLayout.EAST); 
 
         buttonPanel.setBackground(Color.GRAY);
 
         addButtonsToButtonPanel();      
         addFoodFieldsToFoodPanel();
 
-        setUpAddFoodFields();
+        eastButtonPanel.add(addMealButton, new FlowLayout(FlowLayout.CENTER));
+        eastButtonPanel.add(addActivityButton, new FlowLayout(FlowLayout.CENTER));
+        
+        buttonPanel.add(newDayButton, new FlowLayout(FlowLayout.CENTER));
 
         refreshPanel(buttonPanel);
         refreshPanel(foodFieldsPanel);
         refreshPanel(centerPanel);
+        refreshPanel(eastButtonPanel);
+    }
+
+
+    //MODIFIES: this
+    //EFFECT: display add Activity menu where foodfieldsPanel will have caloriesBurnedField
+    //        and eastButtonPanel will have addCaloriesButton and homeButton
+    private void addActivityMenu() {
+        eastButtonPanel.removeAll();
+        removeAllPanels();
+        foodFieldsPanel.removeAll();
+
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.add(eastButtonPanel, BorderLayout.EAST);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+        frame.add(foodFieldsPanel, BorderLayout.NORTH);
+
+        foodFieldsPanel.add(caloriesBurnedField);
+
+        eastButtonPanel.add(addCaloriesButton);
+        eastButtonPanel.add(homeButton);
+        refreshAllPanels();
     }
 
     //MODIFIES: this
@@ -158,8 +189,6 @@ public class MainWindow {
         removeAllPanels();
      
         addGoalPanelFieldsToGoalPanel();
-        setUpGoalPanelFields();
-
         addSetGoalsButtonToGoalButtonPanel();   
         addGoalMenuPanelsToFrame();
 
@@ -171,7 +200,8 @@ public class MainWindow {
 
         removeAllPanels();
         refreshAllPanels();
-        frame.add(showProgressPanel, BorderLayout.CENTER);
+        frame.add(scrollPane);
+        //frame.add(showProgressPanel, BorderLayout.CENTER);
         frame.add(showProgressButtonPanel, BorderLayout.SOUTH);
 
         showProgressButtonPanel.add(showButton, new FlowLayout(FlowLayout.CENTER));
@@ -186,7 +216,7 @@ public class MainWindow {
 
         frame.add(welcomePanel, BorderLayout.NORTH);
         frame.add(welcomeButtonsPanel, BorderLayout.SOUTH); 
-        frame.add(centerPanel);
+        //frame.add(centerPanel);
     }
 
     //MODIFIES: this
@@ -204,14 +234,20 @@ public class MainWindow {
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         foodFieldsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS)); // Vertical stacking of JLabels
         welcomeButtonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         welcomePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         goalPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         goalButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        eastButtonPanel = new JPanel();
+        eastButtonPanel.setLayout(new BoxLayout(eastButtonPanel, BoxLayout.Y_AXIS));
+
+        scrollPane = new JScrollPane(centerPanel);
 
         showProgressPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         showProgressButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
+        
         newDayButton = new JButton("New Day");
         loadButton = new JButton("Load Current Day");
         saveButton = new JButton("save");
@@ -221,11 +257,28 @@ public class MainWindow {
         showProgressButton = new JButton("<html><pre> Show Progress </pre><html>");
         saveButton = new JButton("<html><pre> Save </pre></html>"); 
         showButton = new JButton("<html><pre> Show </pre></html>"); 
-        homeButton = new JButton("<html><pre> Home </pre></html>"); 
+        homeButton = new JButton("<html><pre> Home </pre></html>");
+        addActivityButton = new JButton("<html><pre>  Add  <br>Activity</pre><html>");
+        addCaloriesButton =  new JButton("<html><pre> Add <br> Calories </pre></html>");
 
         caloriesGoalField = new JTextField(caloriesGoalText,12);
         proteinGoalField = new JTextField(proteinGoalText,12);
         dateField = new JTextField(dateFormatText,12);
+        caloriesBurnedField = new JTextField(caloriesBurnedText, 12);
+
+        initializeAddFoodFields();
+
+    }
+
+    //MODIFIES: this
+    //EFFECT: initialize required fields for addFood button and addCaloriesButton
+    private void initializeAddFoodFields() {
+        foodNameField = new JTextField(foodNameText,14);
+        caloriesField = new JTextField(caloriesText,8);
+        carbohydratesField = new JTextField(carbohydratesText,8);
+        proteinField = new JTextField(proteinText,8);
+        fatField = new JTextField(fatText,8);
+        caloriesBurnedField = new JTextField(caloriesBurnedText,14);
     }
 
     //MODIFIES: this
@@ -244,6 +297,8 @@ public class MainWindow {
 
         frame.remove(showProgressButtonPanel);
         frame.remove(showProgressPanel);
+
+        frame.remove(eastButtonPanel);
     }
 
     //MODIFIES: this
@@ -271,14 +326,19 @@ public class MainWindow {
     }
 
     //MODOFIES: this
-    //EFFECT: initalize fields required for setting up protein and calories goals and add it to welcomePanel
-    private void setUpGoalPanelFields() {
+    //EFFECT: setUp all the JTextFields in this class using setUpTextField(textField, string) method
+    private void setUpAllTextField() {
         setUpTextField(proteinGoalField, proteinGoalText);
         setUpTextField(caloriesGoalField, caloriesGoalText);
-        setUpTextField(dateField, dateFormatText);       
+        setUpTextField(dateField, dateFormatText);
+        setUpTextField(foodNameField,foodNameText);
+        setUpTextField(caloriesField,caloriesText);
+        setUpTextField(carbohydratesField,carbohydratesText);
+        setUpTextField(proteinField,proteinText);
+        setUpTextField(fatField,fatText);
+        setUpTextField(caloriesBurnedField, caloriesBurnedText);       
     }
 
-    
 
     //MODIFY: this
     //EFFECT: Constructs a new dailyTracker from caloriesGoalField, 
@@ -306,12 +366,10 @@ public class MainWindow {
     //MODIFIES : this
     //EFFECTS : create 2 buttons ("Add Meal" and " View \nProgress" ) and add them to buttonsPanel
     //          add ActionListner to both buttons to do the task given in their names
-    private void addButtonsToButtonPanel() {        
-        buttonPanel.add(addMealButton, new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(foodRecordButton, new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(saveButton, new FlowLayout(FlowLayout.CENTER));
+    private void addButtonsToButtonPanel() { 
+        buttonPanel.add(saveButton, new FlowLayout(FlowLayout.CENTER));       
+        buttonPanel.add(foodRecordButton, new FlowLayout(FlowLayout.CENTER));      
         buttonPanel.add(showProgressButton, new FlowLayout(FlowLayout.CENTER));
-
         
     }
 
@@ -321,20 +379,20 @@ public class MainWindow {
         showButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showProgressPanel.removeAll();
-                refreshPanel(showProgressPanel);
+                centerPanel.removeAll();
                 JLabel msg;
                 if (!isDateFormatted(dateField.getText())) {
-                    showProgressPanel.add(new JLabel("<html> Please check format of date <html>"));
+                    centerPanel.add(new JLabel("<html> Please check format of date <html>"));
                 } else {
                     int index = checkPrevProgress(dateField.getText());
                     if (index == -1) {
-                        showProgressPanel.add(new JLabel("<html> No Record exist for this date <html>"));
+                        centerPanel.add(new JLabel("<html> No Record exist for this date <html>"));
                     } else {
                         ArrayList<String> data = showProgress(index);                  
                         for (String i : data) {
                             msg = new JLabel("<html>" + i + "<br></html>");
-                            showProgressPanel.add(msg, new FlowLayout(FlowLayout.CENTER));
+                            msg.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            centerPanel.add(msg, new FlowLayout(FlowLayout.CENTER));
                         }
                     }
                 }
@@ -352,16 +410,16 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JLabel lbl;
-                showProgressPanel.removeAll();
+                centerPanel.removeAll();
                 int lastIndex = dailyTrackerRecord.getRecord().size() - 1;
                 if (lastIndex >= 0) {
                     ArrayList<String> msg = showProgress(lastIndex);                  
                     for (String i : msg) {
                         lbl = new JLabel("<html>" + i + "<br></html>");
-                        showProgressPanel.add(lbl, new FlowLayout(FlowLayout.CENTER));
+                        centerPanel.add(lbl, new FlowLayout(FlowLayout.CENTER));
                     }
                     refreshPanel(centerPanel);
-                    refreshPanel(showProgressPanel);
+                    refreshPanel(centerPanel);
                     refreshPanel(buttonPanel);
                     showProgressMenu(); 
                 }
@@ -370,6 +428,8 @@ public class MainWindow {
         });
     }
 
+    //MODIFIES: this
+    //EFFECT: set up home button so it calls mainMenu() method
     private void setUpHomeButton() {
         homeButton.addActionListener(new ActionListener() {
 
@@ -390,7 +450,8 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 centerPanel.removeAll();
-                frame.add(centerPanel);
+                //frame.add(centerPanel);
+                frame.add(scrollPane);
                 if (saveDailyTrackerRecord() == true) {
                     JLabel msg = new JLabel("Data saved properly");
                     centerPanel.add(msg, new FlowLayout(FlowLayout.CENTER));
@@ -414,7 +475,8 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.add(centerPanel, BorderLayout.CENTER);
+                //frame.add(centerPanel, BorderLayout.CENTER);
+                frame.add(scrollPane, BorderLayout.CENTER);
                 if (loadDailyTrackerRecord() == true) {
                     if (dailyTrackerRecord.getRecord().isEmpty()) {
                         newDayMenu();
@@ -458,7 +520,8 @@ public class MainWindow {
                     resetGoalsFields();
                     JLabel msg = new JLabel("Please check your fields again");
                     centerPanel.add(msg, new FlowLayout(FlowLayout.CENTER));
-                    frame.add(centerPanel);
+                    //frame.add(centerPanel);
+                    frame.add(scrollPane);
                     refreshPanel(centerPanel);
                 }
             }           
@@ -497,27 +560,87 @@ public class MainWindow {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                JLabel lbl;
                 centerPanel.removeAll();
+                
                 refreshPanel(centerPanel);
                 if (dailyTrackerRecord.getRecord().isEmpty()) {
 
-                    JLabel lbl2 = new JLabel("<html>Haven't eaten any meals yet</html>");
+                    //JLabel lbl2 = new JLabel("<html>Haven't eaten any meals yet</html>");
+                    JLabel lbl2 = new JLabel("Haven't eaten any meals yet");
+                    lbl2.setAlignmentX(Component.CENTER_ALIGNMENT);
                     centerPanel.add(lbl2);
 
                 } else if (!dailyTracker.getFoodRecord().isEmpty()) {
                    
                     ArrayList<String> msg = foodRecord();                  
                     for (String i : msg) {
-                        lbl = new JLabel("<html>" + i + "<br></html>");
+                        JLabel lbl = new JLabel(i);
+                        lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
                         centerPanel.add(lbl);
                     }
                 } else {
-                    JLabel lbl2 = new JLabel("<html>Haven't eaten any meals yet</html>");
+                    //JLabel lbl2 = new JLabel("<html>Haven't eaten any meals yet</html>");
+                    JLabel lbl2 = new JLabel("Haven't eaten any meals yet");
+                    lbl2.setAlignmentX(Component.CENTER_ALIGNMENT);
                     centerPanel.add(lbl2);
                 }
+                
+
             }            
         });   
+    }
+
+     //MODIFIES: this
+    //EFFECT: give JButton the feature of showing progress of current days nutrietion intake on jFrame
+    private void setUpAddCaloriesButton() {
+        
+        addCaloriesButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (isDouble(caloriesBurnedField.getText())) {
+                    dailyTracker.addCaloriesBurned(Double.valueOf(caloriesBurnedField.getText()));
+                    centerPanel.removeAll();
+                    refreshPanel(centerPanel);
+                    JLabel lbl2 = new JLabel("Calories Burned Today : "  
+                                    + String.valueOf(dailyTracker.getCaloriesBurned()));
+                    lbl2.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    centerPanel.add(lbl2);
+                    
+                } else {
+                    JLabel lbl2 = new JLabel("Please check your input again");
+                    lbl2.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    centerPanel.add(lbl2);
+                }
+                resetFoodFields();
+                addActivityMenu();
+            }
+            
+        });
+       
+         
+    }
+
+    //MODIFIES: this
+    //EFFECT: give JButton the feature of showing progress of current days nutrietion intake on jFrame
+    private void setUpAddActivityButton() {
+        
+        addActivityButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                centerPanel.removeAll();
+                refreshPanel(centerPanel);
+                JLabel lbl2 = new JLabel("Calories Burned Today : " + String.valueOf(dailyTracker.getCaloriesBurned()));
+                lbl2.setAlignmentX(Component.CENTER_ALIGNMENT);
+                centerPanel.add(lbl2);
+                addActivityMenu();
+
+            }
+            
+        });
+       
+         
     }
 
     //MODIFIES:
@@ -533,6 +656,9 @@ public class MainWindow {
         setUpShowProgressButton();
         setUpShowButton();
         setUpHomeButton();
+
+        setUpAddCaloriesButton();
+        setUpAddActivityButton();
     }
 
     
@@ -553,12 +679,12 @@ public class MainWindow {
         proteinField.setText(proteinText);
         carbohydratesField.setText(carbohydratesText);
         fatField.setText(fatText);
+        caloriesBurnedField.setText(caloriesBurnedText);
     }
 
     //MODIFIES : this
-    //EFFECT : initialize JTextFields required for Food setup and add them to foodFieldsPanel
+    //EFFECT : add foodFields  to foodFieldsPanel
     private void addFoodFieldsToFoodPanel() {       
-        initializeAddFoodFields();
 
         foodFieldsPanel.add(foodNameField);
         foodFieldsPanel.add(caloriesField);
@@ -566,30 +692,6 @@ public class MainWindow {
         foodFieldsPanel.add(proteinField);
         foodFieldsPanel.add(fatField);             
     }
-
-    //MODIFIES: this
-    //EFFECT: setUp all fadd food fields uisng setUpTextField() Method
-    private void setUpAddFoodFields() {
-
-        setUpTextField(foodNameField,foodNameText);
-        setUpTextField(caloriesField,caloriesText);
-        setUpTextField(carbohydratesField,carbohydratesText);
-        setUpTextField(proteinField,proteinText);
-        setUpTextField(fatField,fatText);
-    }
-
-    //MODIFIES: this
-    //EFFECT: initialize required fields for addFood button
-    private void initializeAddFoodFields() {
-        foodNameField = new JTextField(foodNameText,14);
-        caloriesField = new JTextField(caloriesText,8);
-        carbohydratesField = new JTextField(carbohydratesText,8);
-        proteinField = new JTextField(proteinText,8);
-        fatField = new JTextField(fatText,8);
-    }
-    
-
-
 
     //MODIFIES: jTextField
     //EFFECT: remove string from jTextField if focus gained and add back string 
@@ -735,6 +837,13 @@ public class MainWindow {
     //MODIFIES: this
     //EFFECT: set jp visibility to false and then to true
     private void refreshPanel(JPanel jp) {
+        jp.setVisible(false);
+        jp.setVisible(true);
+    }
+
+    //MODIFIES: this
+    //EFFECT: set jp visibility to false and then to true
+    private void refreshPanel(JScrollPane jp) {
         jp.setVisible(false);
         jp.setVisible(true);
     }

@@ -72,7 +72,7 @@ public class JsonReader {
             JSONArray jsonArrayFoodRecord = nextTracker.getJSONArray("foodRecord");
             DailyTracker tr = new DailyTracker(date, proteinGoal, caloriesGoal);
             addFoodToTracker(tr, jsonArrayFoodRecord);
-            tr.setCaloriesBurned(caloriesBurned);
+            tr.addCaloriesBurned(caloriesBurned);
 
             dtr.addDailyTracker(tr);
         }

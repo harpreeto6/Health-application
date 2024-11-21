@@ -198,8 +198,8 @@ public class TestDailyTracker {
 
     @Test
     void caloriesBurnedTest() {
-        day1.setCaloriesBurned(200);
-        day1.setCaloriesBurned(300);
+        day1.addCaloriesBurned(200);
+        day1.addCaloriesBurned(300);
         assertEquals(500, day1.getCaloriesBurned(),.01);
     }
 }
