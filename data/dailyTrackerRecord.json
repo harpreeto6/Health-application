@@ -155,7 +155,7 @@
     },
     {
         "date": "02-03-04",
-        "caloriesBurned": 0,
+        "caloriesBurned": 1,
         "foodRecord": [
             {
                 "carbohydrates": {"value": 30},
@@ -181,5 +181,27 @@
         ],
         "caloriesGoal": 1800,
         "proteinGoal": 200
+    },
+    {
+        "date": "12-12-12",
+        "caloriesBurned": 78,
+        "foodRecord": [
+            {
+                "carbohydrates": {"value": 3},
+                "protein": {"value": 3},
+                "name": "33",
+                "fat": {"value": 3},
+                "calories": {"value": 3}
+            },
+            {
+                "carbohydrates": {"value": 3},
+                "protein": {"value": 3},
+                "name": "3",
+                "fat": {"value": 1},
+                "calories": {"value": 3}
+            }
+        ],
+        "caloriesGoal": 2300,
+        "proteinGoal": 32
     }
 ]}
