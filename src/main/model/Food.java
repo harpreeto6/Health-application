@@ -27,6 +27,8 @@ public class Food implements Writable {
         this.protein = protein;
         this.carbohydrates = carbohydrates;
         this.fat = fat;
+
+        EventLog.getInstance().logEvent(new Event("Food named "+ name +" is created"));
     }
 
     //EFFECT: returns the value of Calories

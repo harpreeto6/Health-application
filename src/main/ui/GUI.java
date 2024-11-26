@@ -16,6 +16,7 @@ import model.Calories;
 import model.Carbohydrates;
 import model.DailyTracker;
 import model.DailyTrackerRecord;
+import model.EventLog;
 import model.Fat;
 import model.Food;
 import model.Protein;
@@ -27,7 +28,7 @@ import persistence.JsonWriter;
  * This class will act a GUI for the app
  * Class will be using JSwing library to create Graphical user Interface for our app
  */
-public class MainWindow {
+public class GUI {
 
 
     private DailyTrackerRecord dailyTrackerRecord;
@@ -91,7 +92,7 @@ public class MainWindow {
 
     private List<String> foodImagesAddressStrings;
 
-    public MainWindow() {
+    public GUI() {
         initialize();
     }
 
@@ -849,6 +850,7 @@ public class MainWindow {
                 return false;
             }
             dailyTracker = dailyTrackerRecord.getRecord().get(lastRecordIndex);
+            EventLog.getInstance().clear();
             return true;
         } catch (IOException e) {
             return false;

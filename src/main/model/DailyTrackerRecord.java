@@ -23,8 +23,9 @@ public class DailyTrackerRecord implements Writable {
     }
 
     //MODIFY: this
-    //EFFECT: add a dailyTracker to trackerRecord if there doesn't exist a
-    //        dailyTracker for the same date and return true, else return false
+    //EFFECT: 1) add a dailyTracker to trackerRecord 
+    //        2) if there doesn't exist a dailyTracker for the same date return true
+    //        3) if there already exists a dailyTracker for same date remove that and return false
     public boolean addDailyTracker(DailyTracker dailyTracker) {
         String date = dailyTracker.getDate();
         boolean exist = false;
@@ -32,11 +33,15 @@ public class DailyTrackerRecord implements Writable {
             if (tracker.getDate() == date) {
                 exist = true;
             }
-        }
+        }      
         if (exist) {
+            trackerRecord.remove(dailyTracker);
+            trackerRecord.add(dailyTracker);
+            EventLog.getInstance().logEvent(new Event("DailyTracker saved inside DailyTrackerRecord "));
             return false;
         } else {
             trackerRecord.add(dailyTracker);
+            EventLog.getInstance().logEvent(new Event("DailyTracker saved inside DailyTrackerRecord "));
             return true;
         }
     }

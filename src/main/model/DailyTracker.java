@@ -37,6 +37,8 @@ public class DailyTracker implements Writable {
         this.date = date;
         this.proteinGoal = proteinGoal;
         this.caloriesGoal = caloriesGoal;
+
+        EventLog.getInstance().logEvent(new Event("New DailyTracker Created "));
     }
 
     //EFFECT: Constructs a  DailyTracker and set up the fields with values provided 
@@ -62,6 +64,8 @@ public class DailyTracker implements Writable {
         fatConsumed += food.getFat().getValue();
         proteinConsumed += food.getProtein().getValue();
         carbohydratesConsumed += food.getCarbohydates().getValue();
+
+        EventLog.getInstance().logEvent(new Event("Meal added to tracker " + food.getName()));
     }
 
     //EFFECT: Returns a List containing names of all the food items been eaten upto the point
@@ -115,6 +119,8 @@ public class DailyTracker implements Writable {
 
     //EFFECT: return the foodRecord
     public List<Food> getFoodRecord() {
+
+        EventLog.getInstance().logEvent(new Event("Meals eaten are provided"));
         return this.foodRecord;
     }
 

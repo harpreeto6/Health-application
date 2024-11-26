@@ -5,9 +5,11 @@ import model.Calories;
 import model.Carbohydrates;
 import model.DailyTracker;
 import model.DailyTrackerRecord;
+import model.EventLog;
 import model.Fat;
 import model.Food;
 import model.Protein;
+import model.Event;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -35,6 +37,9 @@ public class JsonReader {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
 
+        EventLog.getInstance().clear();
+
+        EventLog.getInstance().logEvent(new Event("Data loaded from file" ));
         return parseDailyTrackerRecord(jsonObject);
     }
 
