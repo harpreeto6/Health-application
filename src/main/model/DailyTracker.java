@@ -120,7 +120,7 @@ public class DailyTracker implements Writable {
     //EFFECT: return the foodRecord
     public List<Food> getFoodRecord() {
 
-        EventLog.getInstance().logEvent(new Event("Food data inside DailyTracker accessed"));
+        // EventLog.getInstance().logEvent(new Event("Food data inside DailyTracker accessed"));
         return this.foodRecord;
     }
 
@@ -128,7 +128,7 @@ public class DailyTracker implements Writable {
     //EFFECT: remove the food item from the list of items been eaten
     public boolean removeItem(String st) {
         // int i = 0;
-        EventLog.getInstance().logEvent(new Event("Tried to remove " + st + " from DailyTracker"));
+        
         for (Food item : foodRecord) {
             if (item.getName().equals(st)) {
                 this.caloriesConsumed -= item.getCalories().getValue();
@@ -136,6 +136,7 @@ public class DailyTracker implements Writable {
                 this.carbohydratesConsumed -= item.getCarbohydates().getValue();
                 this.fatConsumed -= item.getFat().getValue();
                 foodRecord.remove(item);
+                EventLog.getInstance().logEvent(new Event("Removed " + st + " from DailyTracker"));
                 return true;
             }
             // i++;
@@ -148,6 +149,7 @@ public class DailyTracker implements Writable {
     //EFECT: add the value provided to the caloriesBurned field.
     public void addCaloriesBurned(double value) {
         this.caloriesBurned += value;
+        EventLog.getInstance().logEvent(new Event("Added " + value + " calories burned"));
     }
 
     //EFECT: return caloriesBurned field

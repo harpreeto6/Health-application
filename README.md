@@ -28,54 +28,31 @@ eat throughout the day. Possible features could be like adding different values 
 
 # Phase 4: Task 2
 
-Event log cleared.
+Wed Nov 27 15:19:45 PST 2024
+New DailyTrackerRecord Constructed 
 
-Tue Nov 26 18:49:13 PST 2024
-Food named burger1 is created
-
-Tue Nov 26 18:49:13 PST 2024
-burger1 saved in DailyTracker
-
-Tue Nov 26 18:49:15 PST 2024
-Food data inside DailyTracker accessed
-
-Tue Nov 26 18:49:15 PST 2024
-Food data inside DailyTracker accessed
-
-Tue Nov 26 18:49:36 PST 2024
-Tried to remove burger1 from DailyTracker
-
-Tue Nov 26 18:49:43 PST 2024
-Data saved in file
-
-Tue Nov 26 18:50:02 PST 2024
-DailyTracker Constructed with 26-11-12 date constructed
-
-Tue Nov 26 18:50:02 PST 2024
-DailyTracker for 26-11-12 saved inside DailyTrackerRecord 
-
-Tue Nov 26 18:50:14 PST 2024
-Food named shake is created
-
-Tue Nov 26 18:50:14 PST 2024
-shake saved in DailyTracker
-
-Tue Nov 26 18:50:31 PST 2024
+Wed Nov 27 15:20:19 PST 2024
 DailyTracker Constructed with 27-11-24 date constructed
 
-Tue Nov 26 18:50:31 PST 2024
+Wed Nov 27 15:20:19 PST 2024
 DailyTracker for 27-11-24 saved inside DailyTrackerRecord 
 
-Tue Nov 26 18:50:41 PST 2024
-Food named shake2 is created
+Wed Nov 27 15:20:29 PST 2024
+Food named salad is created
 
-Tue Nov 26 18:50:41 PST 2024
-shake2 saved in DailyTracker
+Wed Nov 27 15:20:29 PST 2024
+salad saved in DailyTracker
 
-Tue Nov 26 18:50:52 PST 2024
-Record for 26-11-12 date searched inside DailyTrackerRecordClass
+Wed Nov 27 15:20:42 PST 2024
+Removed salad from DailyTracker
 
-Tue Nov 26 18:50:56 PST 2024
+Wed Nov 27 15:20:51 PST 2024
+Record for 01-01-01 date searched inside DailyTrackerRecordClass
+
+Wed Nov 27 15:21:02 PST 2024
+Added 150.0 calories burned
+
+Wed Nov 27 15:21:09 PST 2024
 Data saved in file
 
 # Phase 4 : Task 3

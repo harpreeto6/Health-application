@@ -20,7 +20,7 @@ public class DailyTrackerRecord implements Writable {
     //EFFECT: constructs a new record, initialize the field trackerRecord
     public DailyTrackerRecord() {
         trackerRecord = new ArrayList<>();
-        EventLog.getInstance().logEvent(new Event("New DailyTrackerRecorder Constructed "));
+        EventLog.getInstance().logEvent(new Event("New DailyTrackerRecord Constructed "));
     }
 
     //MODIFY: this
