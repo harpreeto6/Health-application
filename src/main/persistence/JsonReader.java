@@ -39,7 +39,7 @@ public class JsonReader {
 
         EventLog.getInstance().clear();
 
-        EventLog.getInstance().logEvent(new Event("Data loaded from file" ));
+        EventLog.getInstance().logEvent(new Event("Data loaded from file"));
         return parseDailyTrackerRecord(jsonObject);
     }
 

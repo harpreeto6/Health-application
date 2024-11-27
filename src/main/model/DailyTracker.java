@@ -38,7 +38,7 @@ public class DailyTracker implements Writable {
         this.proteinGoal = proteinGoal;
         this.caloriesGoal = caloriesGoal;
 
-        EventLog.getInstance().logEvent(new Event("New DailyTracker Created "));
+        EventLog.getInstance().logEvent(new Event("DailyTracker Constructed with " + date + " date constructed"));
     }
 
     //EFFECT: Constructs a  DailyTracker and set up the fields with values provided 
@@ -65,7 +65,7 @@ public class DailyTracker implements Writable {
         proteinConsumed += food.getProtein().getValue();
         carbohydratesConsumed += food.getCarbohydates().getValue();
 
-        EventLog.getInstance().logEvent(new Event("Meal added to tracker " + food.getName()));
+        EventLog.getInstance().logEvent(new Event(food.getName() + " saved in DailyTracker"));
     }
 
     //EFFECT: Returns a List containing names of all the food items been eaten upto the point
@@ -120,24 +120,25 @@ public class DailyTracker implements Writable {
     //EFFECT: return the foodRecord
     public List<Food> getFoodRecord() {
 
-        EventLog.getInstance().logEvent(new Event("Meals eaten are provided"));
+        EventLog.getInstance().logEvent(new Event("Food data inside DailyTracker accessed"));
         return this.foodRecord;
     }
 
     //MODIFIES: this
     //EFFECT: remove the food item from the list of items been eaten
     public boolean removeItem(String st) {
-        int i = 0;
+        // int i = 0;
+        EventLog.getInstance().logEvent(new Event("Tried to remove " + st + " from DailyTracker"));
         for (Food item : foodRecord) {
-            if (item.getName() == st) {
+            if (item.getName().equals(st)) {
                 this.caloriesConsumed -= item.getCalories().getValue();
                 this.proteinConsumed -= item.getProtein().getValue();
-                this.carbohydratesConsumed -= item.getCalories().getValue();
+                this.carbohydratesConsumed -= item.getCarbohydates().getValue();
                 this.fatConsumed -= item.getFat().getValue();
-                foodRecord.remove(i);
+                foodRecord.remove(item);
                 return true;
             }
-            i++;
+            // i++;
         }
         return false;
     }
@@ -173,6 +174,6 @@ public class DailyTracker implements Writable {
             jsonArray.put(f.toJson());
         }
         return jsonArray;
-    }   
+    }
 
 }

@@ -20,6 +20,7 @@ public class DailyTrackerRecord implements Writable {
     //EFFECT: constructs a new record, initialize the field trackerRecord
     public DailyTrackerRecord() {
         trackerRecord = new ArrayList<>();
+        EventLog.getInstance().logEvent(new Event("New DailyTrackerRecorder Constructed "));
     }
 
     //MODIFY: this
@@ -37,12 +38,38 @@ public class DailyTrackerRecord implements Writable {
         if (exist) {
             trackerRecord.remove(dailyTracker);
             trackerRecord.add(dailyTracker);
-            EventLog.getInstance().logEvent(new Event("DailyTracker saved inside DailyTrackerRecord "));
+            EventLog.getInstance().logEvent(new Event("DailyTracker for " 
+                                                    + dailyTracker.getDate() + " saved inside DailyTrackerRecord "));
             return false;
         } else {
             trackerRecord.add(dailyTracker);
-            EventLog.getInstance().logEvent(new Event("DailyTracker saved inside DailyTrackerRecord "));
+            EventLog.getInstance().logEvent(new Event("DailyTracker for " 
+                                                    + dailyTracker.getDate() + " saved inside DailyTrackerRecord "));
             return true;
+        }
+    }
+
+    //REQUIRE: date should be in correct format DD-MM-YY where D,M,Y are int
+    //EFFECT: return -1 if trackerRecord doesn't contain dailyTracker with current date or else
+    //        return index of DailyTracker in trackerRecord
+    public int contains(String date) {
+
+        EventLog.getInstance().logEvent(new Event("Record for " 
+                                                    + date + " date searched inside DailyTrackerRecordClass"));
+
+        boolean exists = false;
+        int index = -1;
+        for (DailyTracker dt : trackerRecord) {
+            index++;
+            if (dt.getDate().equals(date)) {
+                exists = true;
+                break;
+            }
+        }
+        if (exists == false) {
+            return -1;
+        } else {
+            return index;
         }
     }
 

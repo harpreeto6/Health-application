@@ -1,8 +1,6 @@
 package ui;
 
 import javax.swing.SwingUtilities;
-import model.Event;
-import model.EventLog;
 
 /*
  * class to initiate HealthApp or MainWindow
@@ -23,14 +21,8 @@ public class Main {
             
         });
 
-        printLog(EventLog.getInstance());
-
         
     }
 
-    public static void printLog(EventLog el) {
-		for (Event next : el) {
-            System.out.println(next.toString() + "\n");
-        }
-	}
+    
 }

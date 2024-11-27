@@ -10,13 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.events.MouseEvent;
-
 import model.Calories;
 import model.Carbohydrates;
 import model.DailyTracker;
 import model.DailyTrackerRecord;
 import model.EventLog;
+import model.Event;
 import model.Fat;
 import model.Food;
 import model.Protein;
@@ -33,11 +32,11 @@ public class GUI {
 
     private DailyTrackerRecord dailyTrackerRecord;
     private DailyTracker dailyTracker;            
-    private double caloriesReminder;                    
-    private  double proteinReminder;                    
+    // private double caloriesReminder;                    
+    // private  double proteinReminder;                    
 
-    private final int itemsReminder = 3;             
-    private final double percentReminder = .60;   
+    // private final int itemsReminder = 3;             
+    // private final double percentReminder = .60;   
     
     private static final String JSON_STORE = "./data/dailyTrackerRecord.json";
     private JsonWriter jsonWriter;
@@ -68,7 +67,8 @@ public class GUI {
     private JButton homeButton;
     private JButton addActivityButton;
     private JButton addCaloriesButton;
-    
+    private JButton removeMealMenuButton;
+    private JButton removeMealButton;
 
     private JTextField foodNameField;
     private JTextField caloriesField;
@@ -113,12 +113,29 @@ public class GUI {
         frame.setTitle("Main Window");
         frame.setSize(800,500);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        windowClosing();
+        //frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         welcomeMenu();
 
     }
 
+
+    public void windowClosing() {
+
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                printLog(EventLog.getInstance());
+                System.exit(0);
+            }
+        });
+    }
+
+    public static void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println(next.toString() + "\n");
+        }
+    }
 
     //MODIFIES: this
     //EFFECT: set up initial GUI to ask user whether they want to load data or start new day
@@ -151,6 +168,7 @@ public class GUI {
 
         eastButtonPanel.add(addMealButton, new FlowLayout(FlowLayout.CENTER));
         eastButtonPanel.add(addActivityButton, new FlowLayout(FlowLayout.CENTER));
+        eastButtonPanel.add(removeMealMenuButton, new FlowLayout(FlowLayout.CENTER));
         
         buttonPanel.add(newDayButton, new FlowLayout(FlowLayout.CENTER));
 
@@ -160,10 +178,7 @@ public class GUI {
         lbl.setIcon(labelIcon);
         centerPanel.add(lbl);
 
-        refreshPanel(buttonPanel);
-        refreshPanel(foodFieldsPanel);
-        refreshPanel(centerPanel);
-        refreshPanel(eastButtonPanel);
+        refreshAllPanels();
     }
 
 
@@ -194,6 +209,9 @@ public class GUI {
         
         removeAllPanels();
      
+        goalPanel.removeAll();
+        goalButtonPanel.removeAll();
+
         addGoalPanelFieldsToGoalPanel();
         addSetGoalsButtonToGoalButtonPanel();   
         addGoalMenuPanelsToFrame();
@@ -290,6 +308,8 @@ public class GUI {
         homeButton = new JButton("<html><pre> Home </pre></html>");
         addActivityButton = new JButton("<html><pre>  Add  <br>Activity</pre><html>");
         addCaloriesButton =  new JButton("<html><pre> Add <br> Calories </pre></html>");
+        removeMealMenuButton =  new JButton("<html><pre> Remove <br>  Meal </pre></html>");
+        removeMealButton = new JButton("<html><pre>Remove</pre></html>");
 
     }
 
@@ -403,8 +423,48 @@ public class GUI {
     private void addButtonsToButtonPanel() { 
         buttonPanel.add(saveButton, new FlowLayout(FlowLayout.CENTER));       
         buttonPanel.add(foodRecordButton, new FlowLayout(FlowLayout.CENTER));      
-        buttonPanel.add(showProgressButton, new FlowLayout(FlowLayout.CENTER));
-        
+        buttonPanel.add(showProgressButton, new FlowLayout(FlowLayout.CENTER));        
+    }
+
+    //MODIFIES: this
+    //EFFECT : add functionality to removeMealButton so it will show progress for the date entered
+    private void setUpRemoveMealMenuButton() {
+
+        removeMealMenuButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                foodFieldsPanel.removeAll();
+                eastButtonPanel.removeAll();
+                JLabel lbl = new JLabel("<html> Please Enter the meal name to remove : <html>");
+                foodFieldsPanel.add(lbl);
+                foodFieldsPanel.add(foodNameField);  
+                eastButtonPanel.add(removeMealButton);
+                eastButtonPanel.add(homeButton);
+                refreshAllPanels();
+            }
+            
+        });
+    }
+
+    private void setUpRemoveMealButton() {
+
+        removeMealButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean removed = dailyTracker.removeItem(foodNameField.getText());
+                resetFoodFields();
+                centerPanel.removeAll();
+                if (removed) {
+                    centerPanel.add(new JLabel("<html> Meal removed successfully <html>"));
+                } else {
+                    centerPanel.add(new JLabel("<html> No meal with this name exist <html>"));
+                }
+                refreshAllPanels();
+            }
+            
+        });
     }
 
     //MODIFIES: this
@@ -418,7 +478,7 @@ public class GUI {
                 if (!isDateFormatted(dateField.getText())) {
                     centerPanel.add(new JLabel("<html> Please check format of date <html>"));
                 } else {
-                    int index = checkPrevProgress(dateField.getText());
+                    int index = dailyTrackerRecord.contains(dateField.getText());
                     if (index == -1) {
                         centerPanel.add(new JLabel("<html> No Record exist for this date <html>"));
                     } else {
@@ -537,13 +597,14 @@ public class GUI {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadDailyTrackerRecord();
+                //loadDailyTrackerRecord();
                 centerPanel.removeAll();
                 ImageIcon labelIcon = new ImageIcon(new ImageIcon("src/main/icons/answer.png")
                                             .getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
-                        JLabel lbl = new JLabel();
-                        lbl.setIcon(labelIcon);                       
-                        centerPanel.add(lbl);
+                JLabel lbl = new JLabel();
+                lbl.setIcon(labelIcon);                       
+                centerPanel.add(lbl);
+                refreshAllPanels();
                 newDayMenu();
             }
             
@@ -712,6 +773,9 @@ public class GUI {
 
         setUpAddCaloriesButton();
         setUpAddActivityButton();
+
+        setUpRemoveMealButton();
+        setUpRemoveMealMenuButton();
     }
 
     //MODIFIES: thhis

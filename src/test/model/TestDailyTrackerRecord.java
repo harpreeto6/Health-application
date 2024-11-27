@@ -43,6 +43,15 @@ public class TestDailyTrackerRecord {
     }
 
     @Test
+    void containsTest() {
+        record.addDailyTracker(day1);
+        record.addDailyTracker(day2);
+        assertEquals(0,record.contains(day1.getDate()));
+        assertEquals(1, record.contains(day2.getDate()));
+        assertEquals(-1,record.contains("12-12-12"));
+    }
+
+    @Test
     void addTrackerTest() {
         assertTrue(record.addDailyTracker(day1));
         assertTrue(record.addDailyTracker(day2));

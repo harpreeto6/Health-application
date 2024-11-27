@@ -425,23 +425,32 @@ public class HealthApp {
     public void checkPrevProgress() {
         System.out.println("\tPlease enter the date for which you want to check stats");
         String date = getFormattedDate();
-        List<DailyTracker> history = dailyTrackerRecord.getRecord();
-        boolean exists = false;
-        int index = -1;
-        for (DailyTracker dt : history) {
-            index++;
-            if (dt.getDate().equals(date)) {
-                exists = true;
-                break;
-            }
-        }
-        if (exists == false) {
+
+        int index = dailyTrackerRecord.contains(date);
+        if (index == -1) {
             System.out.println("\tNo data exists for the date provided");
             return;
         } else {
             showProgress(index);
             return;
         }
+
+        // boolean exists = false;
+        // int index = -1;
+        // for (DailyTracker dt : history) {
+        //     index++;
+        //     if (dt.getDate().equals(date)) {
+        //         exists = true;
+        //         break;
+        //     }
+        // }
+        // if (exists == false) {
+        //     System.out.println("\tNo data exists for the date provided");
+        //     return;
+        // } else {
+        //     showProgress(index);
+        //     return;
+        // }
     }
 
     //MODIFY: this

@@ -35,7 +35,7 @@ public class JsonWriter {
     public void write(DailyTrackerRecord dtr) {
         JSONObject json = dtr.toJson();
         saveToFile(json.toString(TAB));
-        EventLog.getInstance().logEvent(new Event("Data saved in file" ));
+        EventLog.getInstance().logEvent(new Event("Data saved in file"));
     }
 
     // MODIFIES: this
