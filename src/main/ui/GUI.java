@@ -121,6 +121,8 @@ public class GUI {
     }
 
 
+    //MODIFIES: this
+    //EFFECT : call printlog() method and close the application when close button pressed
     public void windowClosing() {
 
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -131,6 +133,7 @@ public class GUI {
         });
     }
 
+    //EFFECT: print Events from EventLog to Console
     public static void printLog(EventLog el) {
         for (Event next : el) {
             System.out.println(next.toString() + "\n");
@@ -677,7 +680,7 @@ public class GUI {
                 centerPanel.removeAll();
                 JLabel lbl = new JLabel();
                 refreshPanel(centerPanel);
-                if (dailyTracker != null && dailyTracker.getFoodRecord().isEmpty()) {
+                if (dailyTracker != null && dailyTracker.getFoodHistory().isEmpty()) {
                     lbl.setText("Haven't eaten any meals yet");
                     lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
                 } else {                  

@@ -33,5 +33,31 @@
         ],
         "caloriesGoal": 2400,
         "proteinGoal": 120
+    },
+    {
+        "date": "26-11-12",
+        "caloriesBurned": 0,
+        "foodRecord": [{
+            "carbohydrates": {"value": 40},
+            "protein": {"value": 30},
+            "name": "shake",
+            "fat": {"value": 12},
+            "calories": {"value": 600}
+        }],
+        "caloriesGoal": 2500,
+        "proteinGoal": 200
+    },
+    {
+        "date": "27-11-24",
+        "caloriesBurned": 0,
+        "foodRecord": [{
+            "carbohydrates": {"value": 3},
+            "protein": {"value": 3},
+            "name": "shake2",
+            "fat": {"value": 3},
+            "calories": {"value": 23}
+        }],
+        "caloriesGoal": 3000,
+        "proteinGoal": 23
     }
 ]}
