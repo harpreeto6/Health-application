@@ -1,7 +1,22 @@
-{"trackerRecord": [{
-    "date": "27-11-24",
-    "caloriesBurned": 150,
-    "foodRecord": [],
-    "caloriesGoal": 2600,
-    "proteinGoal": 200
-}]}
+{"trackerRecord": [
+    {
+        "date": "27-11-24",
+        "caloriesBurned": 150,
+        "foodRecord": [],
+        "caloriesGoal": 2600,
+        "proteinGoal": 200
+    },
+    {
+        "date": "27-11-24",
+        "caloriesBurned": 150,
+        "foodRecord": [{
+            "carbohydrates": {"value": 14},
+            "protein": {"value": 45},
+            "name": "burger",
+            "fat": {"value": 6},
+            "calories": {"value": 200}
+        }],
+        "caloriesGoal": 2600,
+        "proteinGoal": 200
+    }
+]}
