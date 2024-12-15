@@ -32,7 +32,7 @@ Wed Nov 27 15:19:45 PST 2024
 New DailyTrackerRecord Constructed 
 
 Wed Nov 27 15:20:19 PST 2024
-DailyTracker Constructed with 27-11-24 date constructed
+DailyTracker Constructed with 27-11-24 date 
 
 Wed Nov 27 15:20:19 PST 2024
 DailyTracker for 27-11-24 saved inside DailyTrackerRecord 
